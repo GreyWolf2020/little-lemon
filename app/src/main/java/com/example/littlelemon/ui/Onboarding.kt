@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.sp
 import com.example.littlelemon.R
 
 @Composable
-fun Onboarding(
+fun OnboardingScreen(
     modifier: Modifier = Modifier,
     saveUser: (User) -> Unit
 ) {
@@ -134,7 +134,7 @@ data class User(
 
 @Preview(showBackground = true)
 @Composable
-fun OnboardingPreview() = Onboarding(saveUser = {})
+fun OnboardingPreview() = OnboardingScreen(saveUser = {})
 
 
 @OptIn(ExperimentalMaterial3Api::class)
