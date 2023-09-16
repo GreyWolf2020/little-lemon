@@ -1,11 +1,13 @@
 package com.example.littlelemon
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.littlelemon.data.UserProfile
 import com.example.littlelemon.ui.Home
 import com.example.littlelemon.ui.HomeScreen
 import com.example.littlelemon.ui.MenuDescription
@@ -18,14 +20,14 @@ import com.example.littlelemon.ui.Profile
 import com.example.littlelemon.ui.ProfileScreen
 import com.example.littlelemon.ui.Reservation
 import com.example.littlelemon.ui.ReservationScreen
-import com.example.littlelemon.ui.User
 
 @Composable
 fun Navigation(
     navController: NavHostController,
     isLoggedIn: Boolean,
-    saveUser: (User) -> Unit
+    saveUser: (UserProfile) -> Unit
 ) {
+    Log.d("NavigationComposable", "isLoggedIn $isLoggedIn")
     val startDestination = if (isLoggedIn)
         Home.route
     else
