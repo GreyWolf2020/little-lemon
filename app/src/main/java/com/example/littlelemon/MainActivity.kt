@@ -50,7 +50,6 @@ class MainActivity : ComponentActivity() {
                         .useIsLogged()
                         .collectAsState(initial = true ).value
 
-
                     Navigation(navController = navController, isLoggedIn = isLoggedIn, saveUser = { user -> scope.launch(Dispatchers.IO) { userProfileRepo.saveUserProfile(user) }})
                 }
             }
