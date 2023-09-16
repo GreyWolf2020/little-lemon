@@ -1,16 +1,19 @@
+import com.google.protobuf.gradle.id
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.protobuf")
 }
 
 android {
     namespace = "com.example.littlelemon"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.littlelemon"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -49,8 +52,12 @@ android {
     }
 }
 
-dependencies {
+val protobufVersion = "3.20.1"
 
+dependencies {
+    implementation("com.google.protobuf:protobuf-javalite:$protobufVersion")
+    implementation("com.google.protobuf:protobuf-kotlin-lite:$protobufVersion")
+    implementation("androidx.datastore:datastore:1.1.0-alpha05")
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
     implementation("androidx.activity:activity-compose:1.7.2")
@@ -67,4 +74,24 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:$protobufVersion"
+    }
+
+    generateProtoTasks {
+        // You probably just want to configure for all variants. Although we provide
+        // `ofFlavor()`/`ofBuildType()`/`ofVariant()`/`ofNonTest()`/etc API, in most
+        // cases users do not have customized per buildType/flavor configurations (it
+        // tends to be very use-case specific).
+        all().forEach {
+            it.builtins {
+                id("java") {
+                    option("lite")
+                }
+            }
+        }
+    }
 }

@@ -30,11 +30,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.littlelemon.R
+import com.example.littlelemon.data.UserProfile
 
 @Composable
 fun OnboardingScreen(
     modifier: Modifier = Modifier,
-    saveUser: (User) -> Unit
+    saveUser: (UserProfile) -> Unit
 ) {
     var userName by remember {
         mutableStateOf("")
@@ -106,7 +107,7 @@ fun OnboardingScreen(
 
         Button(
             onClick = {
-                      saveUser(User(name = userName, surname = userSurName, email = userEmail))
+                      saveUser(UserProfile(name = userName, surname = userSurName, email = userEmail))
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -126,11 +127,6 @@ fun OnboardingScreen(
     }
 }
 
-data class User(
-    val name: String,
-    val surname: String,
-    val email: String
-)
 
 @Preview(showBackground = true)
 @Composable
