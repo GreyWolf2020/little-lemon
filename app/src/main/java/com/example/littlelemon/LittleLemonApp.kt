@@ -14,9 +14,7 @@ import kotlinx.coroutines.launch
 fun LittleLemonApp() {
     val scope = rememberCoroutineScope()
     val navController = rememberNavController()
-    val userProfileRepo = UserProfileRepoImpl(
-        LocalContext.current
-    )
+    val userProfileRepo = MyApp.appModule.userProfileRepository
     val isLoggedIn = userProfileRepo
         .useIsLogged()
         .collectAsState(initial = true ).value
