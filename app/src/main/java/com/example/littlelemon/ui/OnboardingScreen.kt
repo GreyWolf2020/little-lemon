@@ -135,6 +135,7 @@ fun LabelTextInput(
     text: String,
     onTextChange: (String) -> Unit,
     textFieldLabel: String,
+    isReadOnly: Boolean = false,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -149,6 +150,7 @@ fun LabelTextInput(
             onValueChange = onTextChange,
             modifier = Modifier
                 .fillMaxWidth(),
+            readOnly = isReadOnly,
             shape = RoundedCornerShape(8.dp)
         )
     }
