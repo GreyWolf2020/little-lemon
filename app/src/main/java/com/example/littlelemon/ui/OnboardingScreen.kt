@@ -25,7 +25,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.littlelemon.data.UserProfile
+import com.example.littlelemon.data.userprofile.UserProfile
 import com.example.littlelemon.ui.common.OnboardingTopAppBar
 
 @Composable

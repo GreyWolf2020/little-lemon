@@ -1,4 +1,4 @@
-package com.example.littlelemon
+package com.example.littlelemon.ui
 
 import android.util.Log
 import androidx.compose.runtime.Composable
@@ -7,19 +7,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.littlelemon.data.UserProfile
-import com.example.littlelemon.ui.Home
-import com.example.littlelemon.ui.HomeScreen
-import com.example.littlelemon.ui.MenuDescription
-import com.example.littlelemon.ui.MenuDescriptionScreen
-import com.example.littlelemon.ui.Onboarding
-import com.example.littlelemon.ui.OnboardingScreen
-import com.example.littlelemon.ui.Order
-import com.example.littlelemon.ui.OrderScreen
-import com.example.littlelemon.ui.Profile
-import com.example.littlelemon.ui.ProfileScreen
-import com.example.littlelemon.ui.Reservation
-import com.example.littlelemon.ui.ReservationScreen
+import com.example.littlelemon.data.userprofile.UserProfile
 
 @Composable
 fun Navigation(

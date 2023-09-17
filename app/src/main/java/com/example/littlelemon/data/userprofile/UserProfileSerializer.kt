@@ -1,4 +1,4 @@
-package com.example.littlelemon.data
+package com.example.littlelemon.data.userprofile
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -10,6 +10,7 @@ import java.io.InputStream
 import java.io.OutputStream
 
 private const val DATASTORE_FILENAME = "userProfileDataStore"
+
 object UserProfileSerializer : Serializer<UserProfileMessage> {
     override val defaultValue: UserProfileMessage
         get() = UserProfileMessage.getDefaultInstance()

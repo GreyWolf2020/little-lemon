@@ -1,4 +1,4 @@
-package com.example.littlelemon.data
+package com.example.littlelemon.data.userprofile
 
 import kotlinx.coroutines.flow.Flow
 

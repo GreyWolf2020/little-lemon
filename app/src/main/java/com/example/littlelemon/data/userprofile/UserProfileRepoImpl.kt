@@ -1,21 +1,16 @@
-package com.example.littlelemon.data
+package com.example.littlelemon.data.userprofile
 
 import android.content.Context
 import android.util.Log
-import androidx.datastore.core.DataStore
 import androidx.datastore.core.IOException
 import com.example.littlelemon.UserProfileMessage
-import com.example.littlelemon.data.UserProfileSerializer.userProfileDataStore
+import com.example.littlelemon.data.userprofile.UserProfileSerializer.userProfileDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectIndexed
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.toList
 
 private const val TAG = "UserProfileRepoImpl"
+
 class UserProfileRepoImpl(
     val context: Context
 ) : UserProfileRepository {

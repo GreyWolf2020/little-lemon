@@ -1,4 +1,4 @@
-package com.example.littlelemon.data
+package com.example.littlelemon.data.userprofile
 
 data class UserProfile(
     val name: String,
