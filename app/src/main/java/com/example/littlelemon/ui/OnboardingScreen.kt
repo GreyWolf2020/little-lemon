@@ -25,8 +25,23 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavGraph
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.compose.composable
 import com.example.littlelemon.data.userprofile.UserProfile
+import com.example.littlelemon.presentation.viewModelFactory
 import com.example.littlelemon.ui.common.OnboardingTopAppBar
+
+fun NavGraphBuilder.onboardingScreen(
+
+) {
+    composable("onboardingScreen") {
+        OnboardingScreen(
+            saveUser =  { }
+        )
+    }
+}
 
 @Composable
 fun OnboardingScreen(
