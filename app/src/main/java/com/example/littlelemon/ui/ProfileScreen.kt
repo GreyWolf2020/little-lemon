@@ -19,9 +19,30 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.viewmodel.viewModelFactory
+import androidx.navigation.NavController
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.compose.composable
+import com.example.littlelemon.MyApp
 import com.example.littlelemon.data.userprofile.UserProfile
 import com.example.littlelemon.presentation.ProfileViewModel
 import com.example.littlelemon.ui.common.OnboardingTopAppBar
+
+private const val ProfileRoute = "profile"
+fun NavGraphBuilder.profileScreen() {
+    composable(ProfileRoute) {
+        val viewModel = viewModel<ProfileViewModel>(
+            factory = viewModelFactory {
+                ProfileViewModel(MyApp.appModule.userProfileRepository)
+            }
+        )
+    }
+}
+
+fun NavController.navigateToProfile() {
+    this.navigate(ProfileRoute)
+}
 
 @Composable
 fun ProfileScreen(
