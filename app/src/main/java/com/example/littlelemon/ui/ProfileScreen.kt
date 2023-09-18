@@ -2,7 +2,6 @@ package com.example.littlelemon.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -37,6 +36,11 @@ fun NavGraphBuilder.profileScreen() {
                 ProfileViewModel(MyApp.appModule.userProfileRepository)
             }
         )
+        val profileState by viewModel.userProfile.collectAsState()
+        ProfileScreen(
+            profileState = profileState,
+            removeProfile = viewModel::removeUserProfile
+        )
     }
 }
 
@@ -46,11 +50,11 @@ fun NavController.navigateToProfile() {
 
 @Composable
 fun ProfileScreen(
-    profileViewModel: ProfileViewModel,
+    profileState: UserProfile,
+    removeProfile: () -> Unit,
     modifier: Modifier = Modifier,
-
-    ) {
-    val profile by profileViewModel.userProfile.collectAsState()
+) {
+    val profile = profileState
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.SpaceBetween,
@@ -64,9 +68,7 @@ fun ProfileScreen(
 
 
         Button(
-            onClick = {
-                profileViewModel.removeUserProfile()
-            },
+            onClick = removeProfile,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp, vertical = 30.dp),
@@ -86,10 +88,11 @@ fun ProfileScreen(
 }
 
 @Composable
-fun ColumnScope.UserProfileInfo(
+fun UserProfileInfo(
     profile: UserProfile,
     modifier: Modifier = Modifier
 ) = Column(
+    modifier = modifier,
     verticalArrangement = Arrangement.Top
 ) {
     Text(
