@@ -33,11 +33,14 @@ interface MenuItemDao {
     @Query("SELECT * from menu")
     fun getAllMenuItems(): Flow<List<MenuItemLocal>>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(menuItem: MenuItemLocal)
+    @Insert
+    suspend fun insertAll(vararg menuItem: MenuItemLocal)
 
     @Delete
     suspend fun delete(menuItem: MenuItemLocal)
+
+    @Query("SELECT(SELECT COUNT(*) FROM menu) == 0")
+    suspend fun isEmpty(): Boolean
 
 }
 
