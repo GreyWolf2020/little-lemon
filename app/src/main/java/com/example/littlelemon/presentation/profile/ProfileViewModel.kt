@@ -1,9 +1,9 @@
-package com.example.littlelemon.presentation
+package com.example.littlelemon.presentation.profile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.littlelemon.data.userprofile.UserProfile
-import com.example.littlelemon.data.userprofile.UserProfileRepository
+import com.example.littlelemon.data.local.userprofile.UserProfile
+import com.example.littlelemon.data.local.userprofile.UserProfileRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

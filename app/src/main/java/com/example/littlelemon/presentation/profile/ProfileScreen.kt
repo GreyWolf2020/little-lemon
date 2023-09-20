@@ -1,4 +1,4 @@
-package com.example.littlelemon.ui
+package com.example.littlelemon.presentation.profile
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,8 +24,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.example.littlelemon.MyApp
-import com.example.littlelemon.data.userprofile.UserProfile
-import com.example.littlelemon.presentation.ProfileViewModel
+import com.example.littlelemon.data.local.userprofile.UserProfile
+import com.example.littlelemon.ui.LabelTextInput
 import com.example.littlelemon.ui.common.OnboardingTopAppBar
 
 private const val ProfileRoute = "profile"

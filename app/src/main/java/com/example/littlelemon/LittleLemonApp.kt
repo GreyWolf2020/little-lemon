@@ -5,7 +5,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.rememberNavController
-import com.example.littlelemon.data.userprofile.UserProfileRepoImpl
+import com.example.littlelemon.data.local.userprofile.UserProfileRepoImpl
 import com.example.littlelemon.ui.Navigation
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
