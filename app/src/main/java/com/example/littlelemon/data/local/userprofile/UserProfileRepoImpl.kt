@@ -1,10 +1,10 @@
-package com.example.littlelemon.data.userprofile
+package com.example.littlelemon.data.local.userprofile
 
 import android.content.Context
 import android.util.Log
 import androidx.datastore.core.IOException
 import com.example.littlelemon.UserProfileMessage
-import com.example.littlelemon.data.userprofile.UserProfileSerializer.userProfileDataStore
+import com.example.littlelemon.data.local.userprofile.UserProfileSerializer.userProfileDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map

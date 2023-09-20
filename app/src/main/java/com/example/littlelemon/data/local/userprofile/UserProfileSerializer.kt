@@ -1,4 +1,4 @@
-package com.example.littlelemon.data.userprofile
+package com.example.littlelemon.data.local.userprofile
 
 import android.content.Context
 import androidx.datastore.core.DataStore
