@@ -12,5 +12,5 @@ data class Dimens(
     val xxxLarge: Dp = 46.dp,
     val xxLarge: Dp = 36.dp,
     val xLarge: Dp = 26.dp,
-    val Large: Dp = 16.dp
+    val large: Dp = 16.dp
 )
