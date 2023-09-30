@@ -28,7 +28,8 @@ fun MenuBreakDown(
     modifier: Modifier = Modifier
 ) {
     Surface(
-        modifier = modifier,
+        modifier = modifier
+            .padding(vertical = AppTheme.dimens.small),
         color = MaterialTheme.colorScheme.background
     ) {
         Column(
@@ -39,7 +40,8 @@ fun MenuBreakDown(
             Text(
                 text = "ORDER FOR DELIVERY",
                 color = Color.Black,
-                style = MaterialTheme.typography.labelMedium
+                style = MaterialTheme.typography.labelMedium,
+                modifier = Modifier.padding(bottom = AppTheme.dimens.medium)
             )
 
             LazyRow (
@@ -80,27 +82,4 @@ fun MenuBreakDownPreview() = LittleLemonTheme(
         allDishCategories = AllCategories(),
         onCategoryClicked = {}
     )
-}
-
-sealed class DishCategory(
-    val isSelected: Boolean,
-    val name: String
-)
-data class Sides(private val _isSelected: Boolean = false, private val _name: String = "Sides") : DishCategory(_isSelected, _name)
-data class Mains(private val _isSelected: Boolean = false, private val _name: String = "Mains") : DishCategory(_isSelected, _name)
-data class Dessert(private val _isSelected: Boolean = false, private val _name: String = "Dessert") : DishCategory(_isSelected, _name)
-data class Starter(private val _isSelected: Boolean = false, private val _name: String = "Starter") : DishCategory(_isSelected, _name)
-data class AllCategories(
-    private val side: DishCategory = Sides(true),
-    private val mains: DishCategory = Mains(false),
-    private val dessert: DishCategory = Dessert(false),
-    private val starter: DishCategory = Starter(false)
-) {
-    val list: List<DishCategory>
-        get() = listOf(
-            side,
-            mains,
-            dessert,
-            starter
-        )
 }

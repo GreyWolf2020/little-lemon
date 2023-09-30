@@ -1,4 +1,4 @@
-package com.example.littlelemon.ui
+package com.example.littlelemon.presentation.onboarding
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -10,9 +10,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,20 +28,35 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import com.example.littlelemon.MyApp
 import com.example.littlelemon.data.local.userprofile.UserProfile
+import com.example.littlelemon.presentation.util.viewModelFactory
 import com.example.littlelemon.ui.common.OnboardingTopAppBar
 
 val OnboardingRoute = "onboardingScreen"
 fun NavGraphBuilder.onboardingScreen(
-
+    navController: NavHostController
 ) {
     composable(OnboardingRoute) {
+        val viewModel = viewModel<OnboardingViewModel>(
+            factory = viewModelFactory {
+                OnboardingViewModel(MyApp.appModule.userProfileRepository)
+            }
+        )
         OnboardingScreen(
-            saveUser =  { }
+            saveUser =  viewModel::onRegister,
+            userEmail = viewModel.email.collectAsState().value,
+            onUserEmailChanged = viewModel::onEmailChange,
+            userName = viewModel.userName.collectAsState().value,
+            onUserNameChange = viewModel::onUserNameChange,
+            userSurname = viewModel.lastName.collectAsState().value,
+            onUserSurnameChange = viewModel::onLastNameChange
         )
     }
 }
@@ -49,19 +67,15 @@ fun NavController.navigetToOnboarding(navOptions: NavOptions? = null) {
 
 @Composable
 fun OnboardingScreen(
-    modifier: Modifier = Modifier,
-    saveUser: (UserProfile) -> Unit
+    userName: String,
+    onUserNameChange: (String) -> Unit,
+    userSurname: String,
+    onUserSurnameChange: (String) -> Unit,
+    userEmail: String,
+    onUserEmailChanged: (String) -> Unit,
+    saveUser: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    var userName by remember {
-        mutableStateOf("")
-    }
-    var userSurName by remember {
-        mutableStateOf("")
-    }
-    var userEmail by remember {
-        mutableStateOf("")
-    }
-
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.Top,
@@ -93,7 +107,7 @@ fun OnboardingScreen(
         LabelTextInput(
             inputLabel = "First Name",
             text = userName,
-            { userName = it },
+            onUserNameChange,
             textFieldLabel = "Jane",
             modifier = Modifier
                 .fillMaxWidth()
@@ -101,8 +115,8 @@ fun OnboardingScreen(
         )
         LabelTextInput(
             inputLabel = "Last Name",
-            text = userSurName,
-            { userSurName = it },
+            text = userSurname,
+            onUserSurnameChange,
             textFieldLabel = "Doe",
             modifier = Modifier
                 .fillMaxWidth()
@@ -111,7 +125,7 @@ fun OnboardingScreen(
         LabelTextInput(
             inputLabel = "Email",
             text = userEmail,
-            { userEmail = it },
+            onUserEmailChanged,
             textFieldLabel = "janedoe@example.com",
             modifier = Modifier
                 .fillMaxWidth()
@@ -121,9 +135,7 @@ fun OnboardingScreen(
         Spacer(modifier.weight(1.0f))
 
         Button(
-            onClick = {
-                      saveUser(UserProfile(name = userName, surname = userSurName, email = userEmail))
-            },
+            onClick = saveUser,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp, vertical = 30.dp),
@@ -145,7 +157,15 @@ fun OnboardingScreen(
 
 @Preview(showBackground = true)
 @Composable
-fun OnboardingPreview() = OnboardingScreen(saveUser = {})
+fun OnboardingPreview() = OnboardingScreen(
+    saveUser = {},
+    onUserSurnameChange = {},
+    onUserNameChange = {},
+    onUserEmailChanged = {},
+    userSurname = "Phiri",
+    userName = "Gregory",
+    userEmail = "gregphiri"
+)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -170,7 +190,10 @@ fun LabelTextInput(
             modifier = Modifier
                 .fillMaxWidth(),
             readOnly = isReadOnly,
-            shape = RoundedCornerShape(8.dp)
+            shape = RoundedCornerShape(8.dp),
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                textColor =  MaterialTheme.colorScheme.primary
+            )
         )
     }
 

@@ -13,11 +13,12 @@ import androidx.compose.ui.unit.sp
 import com.example.littlelemon.R
 
 val karlaFamily = FontFamily(
-    Font(R.font.karla_regular, FontWeight.Normal)
+    Font(R.font.karla_regular)
 )
 
+
 val markaziTextFamily = FontFamily(
-    Font(R.font.markazitext_regular, FontWeight.Normal)
+    Font(R.font.markazitext_regular)
 )
 
 // Set of Material typography styles to start with
@@ -27,13 +28,14 @@ val Typography = Typography(
         fontFamily = markaziTextFamily,
         fontWeight = FontWeight.Medium,
         fontSize = 64.sp,
+        lineHeight = 64.sp
 
     ),
     titleMedium = TextStyle(
         fontFamily = markaziTextFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 40.sp,
-        lineHeight = 42.sp
+        lineHeight = 40.sp
     ),
     bodyLarge = TextStyle(
         fontFamily = karlaFamily,
