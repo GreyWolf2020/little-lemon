@@ -19,13 +19,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.example.littlelemon.MyApp
 import com.example.littlelemon.data.local.userprofile.UserProfile
-import com.example.littlelemon.ui.LabelTextInput
+import com.example.littlelemon.presentation.util.viewModelFactory
+import com.example.littlelemon.presentation.onboarding.LabelTextInput
 import com.example.littlelemon.ui.common.OnboardingTopAppBar
 
 private const val ProfileRoute = "profile"
@@ -45,7 +45,7 @@ fun NavGraphBuilder.profileScreen() {
 }
 
 fun NavController.navigateToProfile() {
-    this.navigate(ProfileRoute)
+        this.navigate(ProfileRoute)
 }
 
 @Composable
@@ -114,7 +114,7 @@ fun UserProfileInfo(
         isReadOnly = true,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 20.dp)
+            .padding(horizontal = 20.dp),
     )
     LabelTextInput(
         inputLabel = "Last Name",

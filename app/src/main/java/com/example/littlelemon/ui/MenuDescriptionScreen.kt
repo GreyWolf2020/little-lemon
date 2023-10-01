@@ -7,13 +7,12 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.google.protobuf.type
 
-private const val dishIdArg = "dishId"
+private const val dishTitleArg = "dishTitle"
 private const val MenuDescriptionRoute = "menuDescription"
 
 internal class MenuDescriptionArg(val dishId: String) {
-    constructor(savedStateHandle: SavedStateHandle): this(checkNotNull(savedStateHandle[dishIdArg]) as String)
+    constructor(savedStateHandle: SavedStateHandle): this(checkNotNull(savedStateHandle[dishTitleArg]) as String)
 }
 /* in viewModel
 internal class ConversationViewModel(...,
@@ -25,24 +24,24 @@ fun NavGraphBuilder.menuDescriptionScreen(
 
 ) {
     composable(
-        "$MenuDescriptionRoute/{$dishIdArg}",
+        "$MenuDescriptionRoute/{$dishTitleArg}",
         arguments = listOf(
-            navArgument(dishIdArg) {
+            navArgument(dishTitleArg) {
                 type = NavType.StringType
                 nullable = false
             }
         )
     ) { backStackEntry ->
         MenuDescriptionScreen(
-            DishId = backStackEntry.arguments?.getString(dishIdArg)
+            DishId = backStackEntry.arguments?.getString(dishTitleArg)
         )
     }
 
 }
 
-fun NavController.navigateToMenuDescription(dishId: String) {
+fun NavController.navigateToMenuDescription(dishTitle: String) {
     this
-        .navigate("MenuDescriptionRoute/$dishId")
+        .navigate("MenuDescriptionRoute/$dishTitle")
 }
 
 @Composable
