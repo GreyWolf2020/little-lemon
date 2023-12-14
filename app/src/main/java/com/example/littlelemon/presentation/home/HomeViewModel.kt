@@ -125,7 +125,15 @@ data class Dish(
     val price: String,
     val imageUrl: String,
     val category: String
-)
+) {
+    var dishCnt = 0
+    fun incrementDishCnt() = dishCnt++
+    fun decrementDishCount(): Unit {
+        if (dishCnt <= 0)
+            return
+        dishCnt--
+    }
+}
 
 fun MenuItemLocal.toDish() : Dish = Dish(
     name = title,

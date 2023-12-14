@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import com.example.littlelemon.data.local.userprofile.UserProfile
 import com.example.littlelemon.presentation.home.HomeRoute
 import com.example.littlelemon.presentation.home.homeScreen
+import com.example.littlelemon.presentation.menudescription.menuDescriptionScreen
 import com.example.littlelemon.presentation.onboarding.OnboardingRoute
 import com.example.littlelemon.presentation.onboarding.onboardingScreen
 import com.example.littlelemon.presentation.profile.profileScreen
@@ -24,7 +25,7 @@ fun Navigation(
     NavHost(navController = navController, startDestination = startDestination) {
         onboardingScreen(navController)
         homeScreen(navController)
-        menuDescriptionScreen()
+        menuDescriptionScreen(navController)
         orderScreen()
         profileScreen()
         reservationScreen()

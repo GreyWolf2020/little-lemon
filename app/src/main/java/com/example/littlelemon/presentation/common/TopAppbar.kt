@@ -1,4 +1,4 @@
-package com.example.littlelemon.ui.common
+package com.example.littlelemon.presentation.common
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
