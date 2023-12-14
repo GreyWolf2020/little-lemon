@@ -37,7 +37,7 @@ import androidx.navigation.compose.composable
 import com.example.littlelemon.MyApp
 import com.example.littlelemon.data.local.userprofile.UserProfile
 import com.example.littlelemon.presentation.util.viewModelFactory
-import com.example.littlelemon.ui.common.OnboardingTopAppBar
+import com.example.littlelemon.presentation.common.OnboardingTopAppBar
 
 val OnboardingRoute = "onboardingScreen"
 fun NavGraphBuilder.onboardingScreen(

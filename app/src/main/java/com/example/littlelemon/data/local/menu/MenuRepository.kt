@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface MenuRepository {
     suspend fun getMenu(): Flow<List<MenuItemLocal>>
+    suspend fun getMenuItem(name: String): MenuItemLocal
 }
 
 fun MenuItemNetwork.toMenuItemLocal(): MenuItemLocal = MenuItemLocal(
@@ -31,4 +32,7 @@ class MenuRepositoryImpl(
         menuItemDao.getAllMenuItems()
     } else
         menuItemDao.getAllMenuItems()
+
+    override suspend fun getMenuItem(name: String): MenuItemLocal = menuItemDao
+        .getMenuItem(name)
 }

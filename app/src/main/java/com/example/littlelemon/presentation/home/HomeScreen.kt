@@ -16,15 +16,13 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import com.example.littlelemon.MyApp
 import com.example.littlelemon.presentation.profile.navigateToProfile
 import com.example.littlelemon.presentation.util.viewModelFactory
-import com.example.littlelemon.ui.common.MyTopAppBar
-import com.example.littlelemon.ui.navigateToMenuDescription
+import com.example.littlelemon.presentation.common.MyTopAppBar
+import com.example.littlelemon.presentation.menudescription.navigateToMenuDescription
 import com.example.littlelemon.ui.navigateToReservation
 import com.example.littlelemon.ui.theme.LittleLemonTheme
-import kotlin.reflect.KFunction0
 
 const val HomeRoute = "home"
 fun NavGraphBuilder.homeScreen(
@@ -52,8 +50,16 @@ fun NavGraphBuilder.homeScreen(
 }
 
 fun NavController.navigateToHome(navOptions: NavOptions? = null) {
+    val navigationOptions = navOptions ?: NavOptions
+        .Builder()
+        .setLaunchSingleTop(true)
+        .setPopUpTo(
+            HomeRoute,
+            false,
+        )
+        .build()
     if (this.currentBackStackEntry?.destination?.route != HomeRoute)
-        this.navigate(HomeRoute, navOptions)
+        this.navigate(HomeRoute, navigationOptions)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

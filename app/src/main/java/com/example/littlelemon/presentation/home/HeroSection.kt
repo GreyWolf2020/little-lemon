@@ -36,6 +36,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.littlelemon.R
+import com.example.littlelemon.presentation.common.MyButton
 import com.example.littlelemon.ui.theme.AppTheme
 import com.example.littlelemon.ui.theme.LittleLemonTheme
 
@@ -97,22 +98,11 @@ fun HeroSection(
                         fontWeight = FontWeight.Medium,
                         style = MaterialTheme.typography.bodyMedium
                     )
-                    Button(
+                    MyButton(
                         onClick = onClickReservation,
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.tertiary,
-                        ),
-                        modifier = Modifier
-                            .height(34.dp)
-                            .fillMaxWidth(0.9f),
-                        contentPadding = PaddingValues( horizontal = 0.dp)
-                    ) {
-                        Text(
-                            text = "Reservation",
-                            color = MaterialTheme.colorScheme.primary,
-                            style = MaterialTheme.typography.labelMedium
-                        )
-                    }
+                        buttonText = "Reservation",
+                        modifier = Modifier.fillMaxWidth(0.9f)
+                    )
                 }
                 Image(
                     painter = painterResource(R.drawable.hero_image),
@@ -134,8 +124,8 @@ fun HeroSection(
                 value = dishName,
                 onValueChange = { dish -> onChangeDishName(dish) },
                 modifier = Modifier
-                .fillMaxWidth()
-                .height(50.dp),
+                    .fillMaxWidth()
+                    .height(50.dp),
                 colors = TextFieldDefaults.textFieldColors(
                     textColor = MaterialTheme.colorScheme.primary
                 ),

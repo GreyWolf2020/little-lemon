@@ -26,7 +26,7 @@ import com.example.littlelemon.MyApp
 import com.example.littlelemon.data.local.userprofile.UserProfile
 import com.example.littlelemon.presentation.util.viewModelFactory
 import com.example.littlelemon.presentation.onboarding.LabelTextInput
-import com.example.littlelemon.ui.common.OnboardingTopAppBar
+import com.example.littlelemon.presentation.common.OnboardingTopAppBar
 
 private const val ProfileRoute = "profile"
 fun NavGraphBuilder.profileScreen() {
