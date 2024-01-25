@@ -1,10 +1,6 @@
 package com.example.littlelemon.presentation.menudescription
 
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -33,6 +29,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.littlelemon.MyApp
 import com.example.littlelemon.R
+import com.example.littlelemon.presentation.common.DeliveryOptions
 import com.example.littlelemon.presentation.common.MyTopAppBar
 import com.example.littlelemon.presentation.home.Dish
 import com.example.littlelemon.presentation.home.navigateToHome

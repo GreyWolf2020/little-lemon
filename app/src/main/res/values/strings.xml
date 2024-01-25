@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Little Lemon</string>
+    <string name="cutlery">Cutlery</string>
+    <string name="cutlery_green_message">Help reduce plastic waste, only ask for cutlery if you need it. Enjoy your meal ;)</string>
 </resources>

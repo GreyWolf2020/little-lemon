@@ -9,7 +9,9 @@ import com.example.littlelemon.presentation.home.homeScreen
 import com.example.littlelemon.presentation.menudescription.menuDescriptionScreen
 import com.example.littlelemon.presentation.onboarding.OnboardingRoute
 import com.example.littlelemon.presentation.onboarding.onboardingScreen
+import com.example.littlelemon.presentation.order.orderScreen
 import com.example.littlelemon.presentation.profile.profileScreen
+import com.example.littlelemon.presentation.reservation.reservationScreen
 
 @Composable
 fun Navigation(
@@ -26,8 +28,8 @@ fun Navigation(
         onboardingScreen(navController)
         homeScreen(navController)
         menuDescriptionScreen(navController)
-        orderScreen()
-        profileScreen()
-        reservationScreen()
+        orderScreen(navController)
+        reservationScreen(navController)
+        profileScreen(navController)
     }
 }

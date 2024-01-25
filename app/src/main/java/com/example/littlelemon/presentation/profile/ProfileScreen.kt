@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import com.example.littlelemon.MyApp
 import com.example.littlelemon.data.local.userprofile.UserProfile
@@ -29,7 +30,9 @@ import com.example.littlelemon.presentation.onboarding.LabelTextInput
 import com.example.littlelemon.presentation.common.OnboardingTopAppBar
 
 private const val ProfileRoute = "profile"
-fun NavGraphBuilder.profileScreen() {
+fun NavGraphBuilder.profileScreen(
+    navController: NavHostController
+) {
     composable(ProfileRoute) {
         val viewModel = viewModel<ProfileViewModel>(
             factory = viewModelFactory {
