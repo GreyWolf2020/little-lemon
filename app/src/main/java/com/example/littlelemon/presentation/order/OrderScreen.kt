@@ -82,6 +82,8 @@ internal fun OrderScreen(
                 OrderSummary(
                     orders = orders
                 )
+                OrderMoreAd()
+
             }
         }
     }

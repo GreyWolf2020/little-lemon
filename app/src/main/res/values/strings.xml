@@ -2,4 +2,9 @@
     <string name="app_name">Little Lemon</string>
     <string name="cutlery">Cutlery</string>
     <string name="cutlery_green_message">Help reduce plastic waste, only ask for cutlery if you need it. Enjoy your meal ;)</string>
+    <string name="add_more">ADD MORE TO YOUR ORDER</string>
+    <string name="order_summary">ORDER SUMMARY</string>
+    <string name="items">Items</string>
+    <string name="x">X</string>
+
 </resources>

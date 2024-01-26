@@ -12,10 +12,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.littlelemon.R
 import com.example.littlelemon.ui.theme.Dimensions
 import com.example.littlelemon.ui.theme.LittleLemonTheme
 import com.example.littlelemon.ui.theme.highlightVariant
@@ -29,13 +31,13 @@ fun OrderSummary(
         modifier = modifier
     ) {
         Text(
-            text = "ORDER SUMMARY",
+            text = stringResource(R.string.order_summary),
             style = MaterialTheme.typography.labelMedium,
             modifier = Modifier.padding(horizontal = Dimensions.large),
 
         )
         Text(
-            text = "Items",
+            text = stringResource(R.string.items),
             color = Color.Black,
             style = MaterialTheme.typography.labelMedium,
             modifier = Modifier
@@ -95,7 +97,7 @@ fun ItemDesc(
                 style = MaterialTheme.typography.bodyMedium
             )
             Text(
-                text = "X",
+                text = stringResource(R.string.x),
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.padding(horizontal = Dimensions.medium)
             )
