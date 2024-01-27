@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.littlelemon.ui.theme.AppTheme
+import com.example.littlelemon.ui.theme.Dimensions
 import com.example.littlelemon.ui.theme.LittleLemonTheme
 import com.example.littlelemon.ui.theme.highlightVariant
 import com.example.littlelemon.ui.theme.tonalButtonSelected
@@ -41,7 +42,7 @@ fun MenuBreakDown(
                 text = "ORDER FOR DELIVERY",
                 color = Color.Black,
                 style = MaterialTheme.typography.labelMedium,
-                modifier = Modifier.padding(bottom = AppTheme.dimens.medium)
+                modifier = Modifier.padding(bottom = Dimensions.medium)
             )
 
             LazyRow (

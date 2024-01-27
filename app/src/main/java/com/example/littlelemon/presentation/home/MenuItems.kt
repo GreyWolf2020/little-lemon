@@ -31,11 +31,11 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.littlelemon.R
+import com.example.littlelemon.presentation.common.MenuItem
 import com.example.littlelemon.ui.theme.AppTheme
 import com.example.littlelemon.ui.theme.LittleLemonTheme
 
-private const val DISHDESCRMAXLINES = 3
-
+private val dishImgHeight = 60.dp
 @Composable
 fun MenuItems(
     dishes: List<Dish>,
@@ -62,7 +62,12 @@ fun MenuItems(
                 )
             }
             items(dishes) { dish ->
-                MenuItem(dish = dish, onDishClicked)
+                MenuItem(
+                    dish = dish,
+                    dishImageHeight = dishImgHeight,
+                    dishDescMaxLines = 3,
+                    onDishClicked = onDishClicked
+                )
                 Divider(
                     thickness = Dp.Hairline,
                     color = MaterialTheme.colorScheme.primary,
@@ -107,89 +112,3 @@ fun MenuItemsPreview() = LittleLemonTheme(
         ), {}
     )
 }
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun MenuItem(
-    dish: Dish,
-    onDishClicked: (String) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    Card(
-        modifier = modifier,
-        onClick = { onDishClicked(dish.name) },
-        colors = CardDefaults
-            .cardColors(
-            containerColor = MaterialTheme.colorScheme.background
-        )
-    ) {
-        Text(
-            text = dish.name,
-            style = MaterialTheme.typography.labelSmall,
-            color = Color.Black
-        )
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Column(
-                modifier = Modifier
-                    .weight(0.65f)
-                    .height(IntrinsicSize.Min),
-                verticalArrangement = Arrangement.SpaceBetween
-            ) {
-
-                Text(
-                    text = dish.description,
-                    style = MaterialTheme.typography.bodySmall,
-                    overflow = TextOverflow.Ellipsis,
-                    maxLines = DISHDESCRMAXLINES,
-                    color = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.padding(vertical = AppTheme.dimens.xxSmall)
-                )
-                Text(
-                    text = "$${dish.price}",
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontWeight = FontWeight.Medium,
-                    color = Color.Black
-                )
-            }
-
-            AsyncImage(
-                model = ImageRequest
-                    .Builder(LocalContext.current)
-                    .data(dish.imageUrl)
-                    .crossfade(true)
-                    .build(),
-                placeholder = painterResource(id = R.drawable.meal_placeholder),
-                alignment = Alignment.CenterEnd,
-                modifier = Modifier
-                    .weight(0.3f)
-                    .height(60.dp)
-                    .padding(bottom = 2.dp)
-                    .align(Alignment.Top),
-                contentDescription =  "image of ${dish.name}",
-                contentScale = ContentScale.Crop,
-
-            )
-        }
-    }
-}
-
-@Preview
-@Composable
-fun MenuItemPreview() = LittleLemonTheme(
-    darkTheme = false,
-    dynamicColor = false
-) {
-    MenuItem(
-        dish = Dish(
-            name = "Hero",
-            description = "Dummy Image for using the hero Image. I am going to continues typing because these words are supposed to span at least three lines.",
-            price = "100.01",
-            imageUrl = "",
-            category = "Mains"
-        ),
-        {}
-    )
-}
-

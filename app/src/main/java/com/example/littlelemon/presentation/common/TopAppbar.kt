@@ -23,7 +23,10 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.littlelemon.R
+import com.example.littlelemon.presentation.home.navigateToHome
+import com.example.littlelemon.presentation.profile.navigateToProfile
 import com.example.littlelemon.ui.theme.AppTheme
 import com.example.littlelemon.ui.theme.LittleLemonTheme
 
@@ -43,6 +46,19 @@ fun OnboardingTopAppBar(modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun OnboardingTopAppBarPreview() = OnboardingTopAppBar()
+
+
+@Composable
+fun TopAppBarWrapper(
+    navController: NavHostController,
+    onclickMenu: () -> Unit,
+    modifier: Modifier
+) = MyTopAppBar(
+    navigateToHome = { navController.navigateToHome(null) },
+    onclickProfile = { navController.navigateToProfile() },
+    onclickMenu = onclickMenu,
+    modifier = modifier
+)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

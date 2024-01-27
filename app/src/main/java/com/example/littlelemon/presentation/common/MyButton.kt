@@ -44,7 +44,7 @@ fun MyButton(
             containerColor = containerColor
         ),
         modifier = modifier
-            .height(34.dp)
+            .height(37.dp)
             .fillMaxWidth(),
     ) {
         Text(

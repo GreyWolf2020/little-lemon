@@ -21,7 +21,7 @@ import com.example.littlelemon.presentation.profile.navigateToProfile
 import com.example.littlelemon.presentation.util.viewModelFactory
 import com.example.littlelemon.presentation.common.MyTopAppBar
 import com.example.littlelemon.presentation.menudescription.navigateToMenuDescription
-import com.example.littlelemon.ui.navigateToReservation
+import com.example.littlelemon.presentation.reservation.navigateToReservation
 import com.example.littlelemon.ui.theme.LittleLemonTheme
 
 const val HomeRoute = "home"
