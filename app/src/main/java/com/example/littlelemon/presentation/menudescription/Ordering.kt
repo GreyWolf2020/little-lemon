@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.sp
 import com.example.littlelemon.presentation.common.MyButton
 import com.example.littlelemon.ui.theme.AppTheme
 import com.example.littlelemon.ui.theme.LittleLemonTheme
-import com.example.littlelemon.ui.theme.karlaFamily
+import com.example.littlelemon.ui.theme.karlaFamilyRegular
 
 @Composable
 fun Ordering(
@@ -150,7 +150,7 @@ fun NumberOfItems(
                 text = "+",
                 fontSize = 40.sp,
                 fontWeight = FontWeight.Bold,
-                fontFamily = karlaFamily,
+                fontFamily = karlaFamilyRegular,
                 color = MaterialTheme.colorScheme.primary
             )
         }
@@ -158,7 +158,7 @@ fun NumberOfItems(
             text = num,
             fontSize = 40.sp,
             fontWeight = FontWeight.Bold,
-            fontFamily = karlaFamily,
+            fontFamily = karlaFamilyRegular,
             color = MaterialTheme.colorScheme.primary,
             modifier = Modifier
                 .padding(horizontal = AppTheme.dimens.small)
@@ -170,7 +170,7 @@ fun NumberOfItems(
                 text = "-",
                 fontSize = 40.sp,
                 fontWeight = FontWeight.Bold,
-                fontFamily = karlaFamily,
+                fontFamily = karlaFamilyRegular,
                 color = MaterialTheme.colorScheme.primary
 
                 )

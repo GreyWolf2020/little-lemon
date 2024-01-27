@@ -1,12 +1,15 @@
 package com.example.littlelemon.presentation.order
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,7 +36,7 @@ fun OrderSummary(
         Text(
             text = stringResource(R.string.order_summary),
             style = MaterialTheme.typography.labelMedium,
-            modifier = Modifier.padding(horizontal = Dimensions.large),
+            modifier = Modifier.padding(horizontal = Dimensions.large, vertical = Dimensions.large),
 
         )
         Text(
@@ -43,7 +46,7 @@ fun OrderSummary(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(color = MaterialTheme.colorScheme.surface)
-                .padding(horizontal = Dimensions.large, vertical = Dimensions.xxSmall),
+                .padding(horizontal = Dimensions.large, vertical = Dimensions.xSmall),
 
         )
         ItemsDesc(orders = orders)
@@ -61,9 +64,18 @@ fun OrderSummaryPreview() = LittleLemonTheme(
 
 @Composable
 fun ItemsDesc(
+    modifier: Modifier = Modifier,
     orders: List<Order>
 ) {
-    Column {
+    Column(
+        modifier = modifier
+            .padding(Dimensions.xxSmall)
+            .scrollable(
+                rememberScrollState(),
+                Orientation.Vertical
+            ),
+        verticalArrangement = Arrangement.spacedBy(Dimensions.xxSmall)
+    ) {
         for (order in orders) {
             ItemDesc(order = order)
         }
@@ -94,16 +106,16 @@ fun ItemDesc(
         ) {
             Text(
                 text = order.qty.toString(),
-                style = MaterialTheme.typography.bodyMedium
+                style = MaterialTheme.typography.bodyLarge
             )
             Text(
                 text = stringResource(R.string.x),
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(horizontal = Dimensions.medium)
             )
             Text(
                 text = order.descr,
-                style = MaterialTheme.typography.bodyMedium
+                style = MaterialTheme.typography.bodyLarge
             )
         }
         Spacer(modifier = Modifier)
@@ -111,14 +123,14 @@ fun ItemDesc(
             modifier = Modifier
                 .weight(0.05f),
             text = "$",
-            style = MaterialTheme.typography.bodyMedium
+            style = MaterialTheme.typography.bodyLarge
         )
         Text(
             modifier = Modifier
                 .weight(0.19f),
             text = String.format("%.2f" ,order.qty * order.unitPrice),
             textAlign = TextAlign.Right,
-            style = MaterialTheme.typography.bodyMedium
+            style = MaterialTheme.typography.bodyLarge
         )
     }
 }
@@ -146,7 +158,7 @@ val sampeOrderThree = Order(
     unitPrice = 20.0
 )
 
-val orders = listOf(sampleOrder, sampleOrderTwo, sampeOrderThree)
+internal val orders = listOf(sampleOrder, sampleOrderTwo, sampeOrderThree)
 
 @Preview
 @Composable

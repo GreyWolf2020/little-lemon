@@ -6,5 +6,10 @@
     <string name="order_summary">ORDER SUMMARY</string>
     <string name="items">Items</string>
     <string name="x">X</string>
+    <string name="subtotal">Subtotal</string>
+    <string name="delivery">Delivery</string>
+    <string name="Service">Service</string>
+    <string name="total">Total</string>
+    <string name="checkout">Checkout</string>
 
 </resources>
