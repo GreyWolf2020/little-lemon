@@ -68,7 +68,8 @@ internal fun OrderScreen(
             MyTopAppBar(
                 navigateToHome =  navigateToHome,
                 onclickProfile = navigateToProfile,
-                onclickMenu = { /*TODO*/ })
+                onclickMenu = { /*TODO*/ }
+            )
         },
         modifier = modifier
     ) { paddingValues ->
@@ -127,7 +128,6 @@ fun OrderScreenPreview() = LittleLemonTheme(
 ) {
     OrderScreen(
         navigateToHome = { },
-        navigateToProfile = { },
-
+        navigateToProfile = { }
     )
 }
