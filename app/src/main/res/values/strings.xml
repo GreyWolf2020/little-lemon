@@ -13,5 +13,7 @@
     <string name="checkout">Checkout</string>
     <string name="reservation">Reservation</string>
     <string name="reservation_msg">Reserve a table, enjoy your favourite dish at your favourite restaurant ;)</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
 
 </resources>

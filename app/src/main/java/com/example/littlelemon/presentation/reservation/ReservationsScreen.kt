@@ -70,7 +70,7 @@ internal fun ReservationScreen(
             ) {
                 BrandingReserveMsg(
                     modifier = Modifier
-                        .requiredHeight(293.dp),
+                        .height(293.dp),
                     onBackClicked = {}
                 )
 
