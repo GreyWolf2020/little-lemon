@@ -16,6 +16,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.stringResource
@@ -38,8 +39,9 @@ fun DatePicker(
     }
     if (showDatePicker) {
         DatePickerDialog(
-            modifier = Modifier
-                .padding(vertical = Dimensions.xxLarge, horizontal = Dimensions.small),
+            modifier = Modifier.padding(
+                vertical = Dimensions.large, horizontal = Dimensions.xSmall
+            ),
             onDismissRequest = { dismissDatePicker(selectedDate) },
             confirmButton = {
                 TextButton(onClick = {
@@ -59,9 +61,10 @@ fun DatePicker(
             shape = RoundedCornerShape(Dimensions.xSmall),
             colors = DatePickerDefaults.colors(
                 containerColor = MaterialTheme.colorScheme.background
-            )
+            ),
         ) {
             androidx.compose.material3.DatePicker(
+                modifier = Modifier.align(Alignment.CenterHorizontally),
                 state = datePickerState,
                 colors = DatePickerDefaults.colors(
                     containerColor = MaterialTheme.colorScheme.background,
@@ -88,7 +91,7 @@ fun DatePickerDialogPreview() = LittleLemonTheme(
     dynamicColor = false
 ) {
     DatePicker(
-        false,
+        true,
     ) {}
 }
 
