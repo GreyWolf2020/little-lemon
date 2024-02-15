@@ -18,6 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.littlelemon.ui.theme.Dimensions
 import com.example.littlelemon.ui.theme.LittleLemonTheme
@@ -45,6 +46,7 @@ internal fun HonorificsSelector(
                 .width(Dimensions.xxxLarge * 2.2f)
                 .menuAnchor(),
             maxLines = 1,
+            textStyle = MaterialTheme.typography.labelMedium,
             readOnly = true,
             value = textFieldValue,
             onValueChange = { newValue ->
