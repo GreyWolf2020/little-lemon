@@ -26,7 +26,7 @@ import com.example.littlelemon.ui.theme.LittleLemonTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun HonorificsSelector(
-
+    modifier: Modifier = Modifier,
 ) {
     val honorifics = listOf<Honorifics>(
         Mr(),
@@ -42,7 +42,7 @@ internal fun HonorificsSelector(
         }
     ) {
         OutlinedTextField(
-            modifier = Modifier
+            modifier = modifier
                 .width(Dimensions.xxxLarge * 2.2f)
                 .menuAnchor(),
             maxLines = 1,

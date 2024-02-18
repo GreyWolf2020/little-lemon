@@ -3,7 +3,6 @@ package com.example.littlelemon.presentation.order
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Divider
@@ -24,7 +23,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import com.example.littlelemon.R
 import com.example.littlelemon.presentation.common.DeliveryOptions
-import com.example.littlelemon.presentation.common.MyButton
+import com.example.littlelemon.presentation.common.LilyLemonFilledButton
 import com.example.littlelemon.presentation.common.MyTopAppBar
 import com.example.littlelemon.presentation.home.navigateToHome
 import com.example.littlelemon.presentation.profile.navigateToProfile
@@ -110,7 +109,7 @@ internal fun OrderScreen(
                 OrderTotality(
                     modifier = Modifier.weight(0.4f)
                 )
-                MyButton(
+                LilyLemonFilledButton(
                     modifier = Modifier.padding(horizontal = Dimensions.large, vertical = Dimensions.xLarge),
                     onClick = { /*TODO*/ }
                     , buttonText = stringResource(R.string.checkout)

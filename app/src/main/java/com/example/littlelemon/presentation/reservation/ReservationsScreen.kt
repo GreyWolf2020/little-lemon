@@ -1,10 +1,16 @@
 package com.example.littlelemon.presentation.reservation
 
+import androidx.compose.foundation.gestures.scrollable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -24,6 +30,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
+import com.example.littlelemon.presentation.common.LilyLemonFilledButton
+import com.example.littlelemon.presentation.common.LilyLemonUnFilledButton
 import com.example.littlelemon.presentation.common.MyTopAppBar
 import com.example.littlelemon.presentation.home.navigateToHome
 import com.example.littlelemon.presentation.profile.navigateToProfile
@@ -86,12 +94,12 @@ internal fun ReservationScreen(
             ) {
                 BrandingReserveMsg(
                     modifier = Modifier
-                        .height(293.dp),
+                        .height(280.dp),
                     onBackClicked = {}
                 )
                 ReservationSection(
                     modifier = Modifier
-                        .padding(horizontal = Dimensions.medium, vertical = Dimensions.large),
+                        .padding(horizontal = Dimensions.medium, vertical = Dimensions.medium),
                     allSections = ReservationSection.allSections,
                     selectedSection = selectedSexn,
                     onSectionSelected = onSexnSelected
@@ -101,12 +109,35 @@ internal fun ReservationScreen(
 
                     }
                     is ReservationInfo -> {
+                        ReservationInfoUI(
+                            modifier = Modifier
+                                .padding(horizontal = Dimensions.large)
+                                .weight(0.1f)
+                                .verticalScroll(rememberScrollState())
 
+                        )
                     }
                     is ReviewInfo -> {
 
                     }
                 }
+                Spacer(modifier = Modifier.height(Dimensions.large))
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    LilyLemonUnFilledButton(
+                        modifier = Modifier. weight(0.4f),
+                        onClick = {  },
+                        buttonText = "Cancel"
+                    )
+                    Spacer(modifier = Modifier. weight(0.2f),)
+                    LilyLemonFilledButton(
+                        modifier = Modifier. weight(0.4f),
+                        onClick = { },
+                        buttonText = "Proceed"
+                    )
+                }
+                Spacer(modifier = Modifier.height(Dimensions.large))
             }
         }
 

@@ -1,15 +1,13 @@
 package com.example.littlelemon.presentation.reservation
 
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.littlelemon.ui.theme.Dimensions
 import com.example.littlelemon.ui.theme.LittleLemonTheme
 
 @Composable
@@ -17,19 +15,21 @@ internal fun LilyLemonTextInput(
     modifier: Modifier = Modifier,
     text: String,
     onTextChange: (String) -> Unit,
-    label: String
+    placeholder: String
 ) {
     OutlinedTextField(
-        modifier = modifier,
+        modifier = modifier
+            .wrapContentHeight(),
         maxLines = 1,
         value = text,
-        textStyle = MaterialTheme.typography.labelMedium,
-        label = {
+        placeholder = {
             Text(
-                text = label,
-                color = MaterialTheme.colorScheme.primary
+                text = placeholder,
+                color = MaterialTheme.colorScheme.primary,
+                style = MaterialTheme.typography.labelMedium,
             )
         },
+        textStyle = MaterialTheme.typography.labelMedium,
         onValueChange = { newText ->
             onTextChange(newText)
         },
@@ -49,8 +49,8 @@ private fun LilyLemonTextInputPreview() = LittleLemonTheme(
     dynamicColor = false
 ) {
     LilyLemonTextInput(
-        text = "Greg",
+        text = "grgre",
         onTextChange = {},
-        label = "Name"
+        placeholder = "Name"
     )
 }
