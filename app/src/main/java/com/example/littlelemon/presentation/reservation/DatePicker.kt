@@ -1,6 +1,5 @@
 package com.example.littlelemon.presentation.reservation
 
-import android.graphics.drawable.VectorDrawable
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
 import androidx.compose.foundation.clickable
@@ -37,6 +36,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import com.example.littlelemon.R
@@ -115,6 +115,7 @@ fun DatePickerDialogPreview() = LittleLemonTheme(
     ) {}
 }
 
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun DatePickerInput(
@@ -137,8 +138,8 @@ internal fun DatePickerInput(
         readOnly = true,
         leadingIcon = {
               Icon(
-                  imageVector = ImageVector.vectorResource(id = R.drawable.calendar)
-                  , contentDescription = "Calender Icon"
+                  imageVector = ImageVector.vectorResource(id = R.drawable.calendar),
+                  contentDescription = "Calender Icon"
               )
         },
         value = date,

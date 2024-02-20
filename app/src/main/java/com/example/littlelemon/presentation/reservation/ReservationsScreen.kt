@@ -106,7 +106,12 @@ internal fun ReservationScreen(
                 )
                 when(selectedSexn) {
                     is PaymentInfo -> {
-
+                        PaymentInfoUI(
+                            modifier = Modifier
+                                .padding(horizontal = Dimensions.large)
+                                .weight(0.1f)
+                                .verticalScroll(rememberScrollState())
+                        )
                     }
                     is ReservationInfo -> {
                         ReservationInfoUI(
@@ -114,16 +119,31 @@ internal fun ReservationScreen(
                                 .padding(horizontal = Dimensions.large)
                                 .weight(0.1f)
                                 .verticalScroll(rememberScrollState())
-
                         )
                     }
                     is ReviewInfo -> {
-
+                        ReviewInfoUI(
+                            modifier = Modifier
+                                .padding(horizontal = Dimensions.large)
+                                .weight(0.1f)
+                                .verticalScroll(rememberScrollState()),
+                            customerReserveInfo = CustomerReserveInfo(
+                                fullName = "James V. Phiri",
+                                address = "183 Mbuyanehanda Street",
+                                emailAdd = "variety@hotmail.com",
+                                phonNum = "0771 079 854",
+                                date = "23 Feb 2024",
+                                time = "10 00 Hrs",
+                                attendants = 3
+                            )
+                        )
                     }
                 }
                 Spacer(modifier = Modifier.height(Dimensions.large))
                 Row(
-                    horizontalArrangement = Arrangement.SpaceBetween
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier
+                        .padding(horizontal = Dimensions.medium),
                 ) {
                     LilyLemonUnFilledButton(
                         modifier = Modifier. weight(0.4f),
@@ -154,6 +174,6 @@ fun ReservationScreenPreview() = LittleLemonTheme(
         navigateToHome = { },
         navigateToProfile = { },
         onSexnSelected = {},
-        selectedSexn = ReservationInfo(),
+        selectedSexn = ReviewInfo(),
     )
 }

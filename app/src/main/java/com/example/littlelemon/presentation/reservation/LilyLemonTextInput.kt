@@ -14,13 +14,20 @@ import com.example.littlelemon.ui.theme.LittleLemonTheme
 internal fun LilyLemonTextInput(
     modifier: Modifier = Modifier,
     text: String,
+    minLines: Int = 1,
     onTextChange: (String) -> Unit,
-    placeholder: String
+    placeholder: String,
+    leadingIcon: @Composable (() -> Unit)? = null,
+    prefix: @Composable() (() -> Unit)? = null
 ) {
+
     OutlinedTextField(
         modifier = modifier
             .wrapContentHeight(),
-        maxLines = 1,
+        leadingIcon = leadingIcon,
+        singleLine = if (minLines > 1) false else true,
+        prefix = prefix,
+        minLines = minLines,
         value = text,
         placeholder = {
             Text(
