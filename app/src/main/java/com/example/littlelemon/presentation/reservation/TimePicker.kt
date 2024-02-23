@@ -4,6 +4,8 @@ import android.app.TimePickerDialog
 import android.icu.text.SimpleDateFormat
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -28,6 +30,7 @@ import androidx.compose.material3.TimePickerColors
 import androidx.compose.material3.TimePickerDefaults
 import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -48,7 +51,7 @@ internal fun TimePicker(
     selectedHour: Int = 0,
     selectedMinute: Int = 0,
     showDialog: Boolean = false,
-    onDismiss: (DateNTime?) -> Unit = {}
+    onDismiss: (Time?) -> Unit = {}
 ) {
     val timePickerState = rememberTimePickerState(
         initialHour = selectedHour,
@@ -56,7 +59,9 @@ internal fun TimePicker(
     )
     if (showDialog) {
         BasicAlertDialog(
-            onDismissRequest = { onDismiss(null) },
+            onDismissRequest = {
+                onDismiss(null)
+           },
             modifier = modifier
         ) {
             Column(
@@ -102,7 +107,7 @@ internal fun TimePicker(
                     // confirm button
                     TextButton(
                         onClick = {
-                            onDismiss(DateNTime(timePickerState.hour, timePickerState.minute))
+                            onDismiss(Time(timePickerState.hour.toShort(), timePickerState.minute.toShort()))
                         }
                     ) {
                         Text(text = "Confirm")
@@ -112,8 +117,6 @@ internal fun TimePicker(
         }
     }
 }
-
-internal data class DateNTime(val date: Int, val time: Int)
 
 @Preview
 @Composable
@@ -135,13 +138,14 @@ internal fun TimePickerInput(
     selectedMinute: Int?,
     onClick: () -> Unit
 ) {
+    val interactionSource = remember { MutableInteractionSource() }
     val hour = selectedHour?.let { if (it < 10) "0$it" else it } ?: ""
     val minute = selectedMinute?.let { if (it < 10) " 0$it Hrs" else " $it Hrs" } ?: "" ?: ""
 
     OutlinedTextField(
+        interactionSource = interactionSource,
         modifier = modifier
-            .height(IntrinsicSize.Min)
-            .clickable { onClick() },
+            .height(IntrinsicSize.Min),
         maxLines = 1,
         readOnly = true,
         leadingIcon = {
@@ -170,6 +174,8 @@ internal fun TimePickerInput(
             unfocusedBorderColor = MaterialTheme.colorScheme.primary,
         )
     )
+    val isPressed = interactionSource.collectIsPressedAsState().value
+    if (isPressed) onClick()
 }
 
 

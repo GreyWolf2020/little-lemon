@@ -8,7 +8,6 @@ import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MenuDefaults
-import androidx.compose.material3.MenuItemColors
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,7 +17,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.littlelemon.ui.theme.Dimensions
 import com.example.littlelemon.ui.theme.LittleLemonTheme
@@ -27,14 +25,11 @@ import com.example.littlelemon.ui.theme.LittleLemonTheme
 @Composable
 internal fun HonorificsSelector(
     modifier: Modifier = Modifier,
+    honorific: Honorifics = Mrs(),
+    onHonorificChange: (Honorifics) -> Unit = {}
 ) {
-    val honorifics = listOf<Honorifics>(
-        Mr(),
-        Mrs(),
-        Ms(),
-    )
+    val honorifics = Honorifics.list
     var expanded by remember { mutableStateOf(false) }
-    var textFieldValue: String by remember {mutableStateOf(honorifics.first().name)}
     ExposedDropdownMenuBox(
         expanded = expanded,
         onExpandedChange = {
@@ -43,15 +38,13 @@ internal fun HonorificsSelector(
     ) {
         OutlinedTextField(
             modifier = modifier
-                .width(Dimensions.xxxLarge * 2.2f)
+                .width(Dimensions.xxxLarge * 2.3f)
                 .menuAnchor(),
             maxLines = 1,
             textStyle = MaterialTheme.typography.labelMedium,
             readOnly = true,
-            value = textFieldValue,
-            onValueChange = { newValue ->
-                textFieldValue = newValue
-            },
+            value = honorific.name,
+            onValueChange = { },
             trailingIcon = {
                 ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
             },
@@ -75,7 +68,7 @@ internal fun HonorificsSelector(
                         )
                     },
                     onClick = {
-                        textFieldValue = selectionOption.name
+                        onHonorificChange(selectionOption)
                         expanded = false
                     },
                     colors = MenuDefaults.itemColors(
@@ -89,13 +82,6 @@ internal fun HonorificsSelector(
         }
     }
 }
-
-sealed class Honorifics(open val name: String)
-
-data class Mr(override val name: String = "Mr") : Honorifics(name)
-data class Mrs(override val name: String = "Mrs") : Honorifics(name)
-
-data class Ms(override val name: String = "Ms") : Honorifics(name)
 
 @Preview
 @Composable

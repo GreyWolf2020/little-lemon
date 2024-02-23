@@ -1,5 +1,6 @@
 package com.example.littlelemon.presentation.reservation
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -16,11 +17,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.littlelemon.R
 import com.example.littlelemon.ui.theme.Dimensions
 import com.example.littlelemon.ui.theme.LittleLemonTheme
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
 
+@SuppressLint("SimpleDateFormat")
 @Composable
 internal fun ReviewInfoUI(
     modifier: Modifier = Modifier,
-    customerReserveInfo: CustomerReserveInfo
+    customerReserveInfo: CustomerReservation
 ) {
     Column(
         modifier = modifier
@@ -58,7 +63,9 @@ internal fun ReviewInfoUI(
                 overflow = TextOverflow.Ellipsis
             )
             Text(
-                text = " " + customerReserveInfo.attendants,
+                text = customerReserveInfo.attendants
+                    ?.let { attendants -> " $attendants" }
+                    ?: " 0",
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.weight(0.73f),
@@ -77,8 +84,12 @@ internal fun ReviewInfoUI(
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
+
             Text(
-                text = " ${customerReserveInfo.date}",
+                text = customerReserveInfo.date?.let { date ->
+                    SimpleDateFormat("dd-MM-yyyy")
+                        .format(Date(date))
+                } ?: "",
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.weight(0.73f),
@@ -98,7 +109,10 @@ internal fun ReviewInfoUI(
                 overflow = TextOverflow.Ellipsis
             )
             Text(
-                text = " ${customerReserveInfo.time}",
+                text = customerReserveInfo.time
+                    ?.let { time ->
+                         " $time"
+                    } ?: "",
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.weight(0.73f),
@@ -119,7 +133,7 @@ internal fun ReviewInfoUI(
                 overflow = TextOverflow.Ellipsis
             )
             Text(
-                text = " ${customerReserveInfo.emailAdd}",
+                text = " ${customerReserveInfo.email}",
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.weight(0.73f),
@@ -139,7 +153,7 @@ internal fun ReviewInfoUI(
                 overflow = TextOverflow.Ellipsis
             )
             Text(
-                text = " ${customerReserveInfo.phonNum}",
+                text = " ${customerReserveInfo.phoneNum}",
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.weight(0.73f),
@@ -179,24 +193,15 @@ private fun ReviewInfoUIPreview() = LittleLemonTheme(
 ) {
     ReviewInfoUI(
         modifier = Modifier.padding(horizontal = Dimensions.large),
-        customerReserveInfo = CustomerReserveInfo(
-            fullName = "James V. Phiri",
-            address = "183 Mbuyanehanda Street",
-            emailAdd = "variety@hotmail.com",
-            phonNum = "0771 079 854",
-            date = "23 Feb 2024",
-            time = "10 00 Hrs",
-            attendants = 3
+        customerReserveInfo = CustomerReservation(
+            salutation = Mr(),
+            fullName = "James Variety Phiri",
+            attendants = 2,
+            date = null,
+            time = null,
+            email = "variety@hotmail.com",
+            phoneNum = "0771 079 854",
+            address = "183 Mbuyaehanda Street"
         )
     )
 }
-
-internal data class CustomerReserveInfo(
-    val fullName: String,
-    val address: String,
-    val emailAdd: String,
-    val phonNum: String,
-    val attendants: Short,
-    val date: String,
-    val time: String,
-)

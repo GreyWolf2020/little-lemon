@@ -3,6 +3,8 @@ package com.example.littlelemon.presentation.reservation
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -48,12 +50,12 @@ import java.util.Date
 @Composable
 internal fun DatePicker(
     showDatePicker: Boolean = false,
-    now: Calendar = Calendar.getInstance(),
+    now: Date = Date(),
     dismissDatePicker: (Long) -> Unit = {},
 ) {
-    val datePickerState = rememberDatePickerState(initialSelectedDateMillis = now.timeInMillis)
+    val datePickerState = rememberDatePickerState(initialSelectedDateMillis = now.time)
     var selectedDate by remember {
-        mutableLongStateOf(now.timeInMillis)
+        mutableLongStateOf(now.time)
     }
     if (showDatePicker) {
         DatePickerDialog(
@@ -123,6 +125,7 @@ internal fun DatePickerInput(
     chosenDate: Long?,
     onClick: () -> Unit
 ) {
+    val interactionSource = remember { MutableInteractionSource() }
     val date = chosenDate?.let { dt ->
         val time = Date(dt)
         val formatter = SimpleDateFormat("dd-MM-yyyy")
@@ -131,9 +134,9 @@ internal fun DatePickerInput(
     } ?: ""
 
     OutlinedTextField(
+        interactionSource = interactionSource,
         modifier = modifier
-            .height(IntrinsicSize.Min)
-            .clickable { onClick() },
+            .height(IntrinsicSize.Min),
         maxLines = 1,
         readOnly = true,
         leadingIcon = {
@@ -162,6 +165,8 @@ internal fun DatePickerInput(
             unfocusedBorderColor = MaterialTheme.colorScheme.primary,
         )
     )
+    val isPressed = interactionSource.collectIsPressedAsState().value
+    if (isPressed) onClick()
 }
 
 @Preview
