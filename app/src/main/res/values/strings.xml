@@ -23,5 +23,18 @@
     <string name="cell">Cell:</string>
     <string name="addr">Addr:</string>
     <string name="name">"Name: "</string>
+    <string name="little_lemon">Little Lemon</string>
+    <string name="chicago">Chicago</string>
+    <string name="hero_section_image">Hero section image</string>
+    <string name="calender_icon">Calender Icon</string>
+    <string name="card_num">Card #</string>
+    <string name="cvv">CVV</string>
+    <string name="exp_date">Exp Date</string>
+    <string name="address">Address</string>
+    <string name="phone_num">Phone #</string>
+    <string name="first_name">First Name</string>
+    <string name="middle_names">Middle Names</string>
+    <string name="surname">Surname</string>
+    <string name="number_of_diner">Number of Diner\n%1$s</string>
 
 </resources>

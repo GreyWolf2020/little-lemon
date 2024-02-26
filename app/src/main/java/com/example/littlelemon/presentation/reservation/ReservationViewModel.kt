@@ -7,7 +7,8 @@ import kotlinx.coroutines.flow.update
 
 internal class ReservationViewModel : ViewModel() {
 
-    private var customer: Customer = Customer()
+    private val _customer: MutableStateFlow<Customer> = MutableStateFlow(Customer())
+    internal val customer = _customer.asStateFlow()
 
     private val _showSnackBar = MutableStateFlow(false)
     internal val showSnackBar = _showSnackBar.asStateFlow()
@@ -96,42 +97,70 @@ internal class ReservationViewModel : ViewModel() {
 
     internal fun onClickProceed(): Unit = when(selectedSection.value) {
         is PaymentInfo -> {
-            customer = customer.copy(
-                payeeInfo = Payee(
-                    cvv = _cvv.value,
-                    cardNum = _cardNum.value,
-                    expDate = _expDate.value,
-                    address = _address.value,
-                    phoneNum = _phoneNum.value,
-                    email = _email.value
+            _customer.update {
+                it.copy(
+                    payeeInfo = Payee(
+                        cvv = _cvv.value,
+                        cardNum = _cardNum.value,
+                        expDate = _expDate.value,
+                        address = _address.value,
+                        phoneNum = _phoneNum.value,
+                        email = _email.value
+                    )
                 )
-            )
+            }
             _selectedSection.update { section ->
                  ReservationSection.nextSection(section)
             }
         }
         is ReservationInfo -> {
-            customer = customer.copy(
-                salutation = _honorific.value,
-                fullName = _firstName.value + _middleNames.value.toInitials() + _surname.value,
-                attendants = _attendants.value.toInt(),
-                date = _date.value,
-                time = _time.value,
-            )
+            _customer.update {
+                it.copy(
+                    salutation = _honorific.value,
+                    fullName = _firstName.value + _middleNames.value.toInitials() + _surname.value,
+                    attendants = _attendants.value.toInt(),
+                    date = _date.value,
+                    time = _time.value,
+                )
+            }
             _selectedSection.update {  section -> ReservationSection.nextSection(section)  }
         }
         is ReviewInfo -> {
-            if (!customer.isValid())
+            if (!_customer.value.isValid())
                 _showSnackBar.update { true }
             else {
                 _gotoHome.update { true }
             }
 
-
         }
     }
 
     fun onSectionSelected(newSelection: ReservationSection) {
+        if (_selectedSection.value is PaymentInfo)
+            _customer.update {
+                it.copy(
+                    payeeInfo = Payee(
+                        cvv = _cvv.value,
+                        cardNum = _cardNum.value,
+                        expDate = _expDate.value,
+                        address = _address.value,
+                        phoneNum = _phoneNum.value,
+                        email = _email.value
+                    )
+                )
+            }
+
+        if (_selectedSection.value is ReservationInfo)
+            _customer.update {
+                it.copy(
+                    salutation = _honorific.value,
+                    fullName = _firstName.value + _middleNames.value.toInitials() + _surname.value,
+                    attendants = _attendants.value.toInt(),
+                    date = _date.value,
+                    time = _time.value,
+                )
+            }
+
         when (newSelection) {
             is PaymentInfo -> _selectedSection.update { section -> newSelection }
             is ReservationInfo -> _selectedSection.update { section -> newSelection }

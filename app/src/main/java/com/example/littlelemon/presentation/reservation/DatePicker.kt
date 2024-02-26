@@ -123,12 +123,14 @@ fun DatePickerDialogPreview() = LittleLemonTheme(
 internal fun DatePickerInput(
     modifier: Modifier = Modifier,
     chosenDate: Long?,
+    dateFormat: String = "dd-MM-yyyy",
+    placeholder: String = "Date",
     onClick: () -> Unit
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     val date = chosenDate?.let { dt ->
         val time = Date(dt)
-        val formatter = SimpleDateFormat("dd-MM-yyyy")
+        val formatter = SimpleDateFormat(dateFormat)
         val current = formatter.format(time)
         current
     } ?: ""
@@ -142,7 +144,7 @@ internal fun DatePickerInput(
         leadingIcon = {
               Icon(
                   imageVector = ImageVector.vectorResource(id = R.drawable.calendar),
-                  contentDescription = "Calender Icon"
+                  contentDescription = stringResource(R.string.calender_icon)
               )
         },
         value = date,
@@ -151,7 +153,7 @@ internal fun DatePickerInput(
         },
         placeholder = {
             Text(
-                text = "Date",
+                text = placeholder,
                 color = MaterialTheme.colorScheme.primary,
                 style = MaterialTheme.typography.labelMedium,
             )

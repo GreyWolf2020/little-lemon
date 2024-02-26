@@ -25,7 +25,7 @@ import java.util.Date
 @Composable
 internal fun ReviewInfoUI(
     modifier: Modifier = Modifier,
-    customerReserveInfo: CustomerReservation
+    customerReserveInfo: Customer
 ) {
     Column(
         modifier = modifier
@@ -133,7 +133,7 @@ internal fun ReviewInfoUI(
                 overflow = TextOverflow.Ellipsis
             )
             Text(
-                text = " ${customerReserveInfo.email}",
+                text = " ${customerReserveInfo.payeeInfo.email}",
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.weight(0.73f),
@@ -153,7 +153,7 @@ internal fun ReviewInfoUI(
                 overflow = TextOverflow.Ellipsis
             )
             Text(
-                text = " ${customerReserveInfo.phoneNum}",
+                text = " ${customerReserveInfo.payeeInfo.phoneNum}",
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.weight(0.73f),
@@ -174,7 +174,7 @@ internal fun ReviewInfoUI(
                 overflow = TextOverflow.Ellipsis
             )
             Text(
-                text = " ${customerReserveInfo.address}",
+                text = " ${customerReserveInfo.payeeInfo.address}",
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.weight(0.73f),
@@ -193,15 +193,20 @@ private fun ReviewInfoUIPreview() = LittleLemonTheme(
 ) {
     ReviewInfoUI(
         modifier = Modifier.padding(horizontal = Dimensions.large),
-        customerReserveInfo = CustomerReservation(
+        customerReserveInfo = Customer(
             salutation = Mr(),
             fullName = "James Variety Phiri",
             attendants = 2,
             date = null,
             time = null,
-            email = "variety@hotmail.com",
-            phoneNum = "0771 079 854",
-            address = "183 Mbuyaehanda Street"
+            payeeInfo = Payee(
+                email = "variety@hotmail.com",
+                phoneNum = "0771 079 854",
+                address = "183 Mbuyanehanda Street",
+                expDate = null,
+                cardNum = "",
+                cvv = ""
+            )
         )
     )
 }

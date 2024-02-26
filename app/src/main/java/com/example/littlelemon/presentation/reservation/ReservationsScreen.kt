@@ -22,9 +22,13 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -95,6 +99,9 @@ internal fun ReservationScreen(
     val snackBarHostState = remember {
         SnackbarHostState()
     }
+    var gotoNextProcess by remember {
+        mutableStateOf("Proceed")
+    }
     LaunchedEffect(key1 = showSnackBar ) {
         if (showSnackBar) {
             val result = snackBarHostState
@@ -153,9 +160,18 @@ internal fun ReservationScreen(
                     onSectionSelected = onSexnSelected
                 )
                 when(selectedSexn) {
-                    is PaymentInfo -> paymentInfoUi()
-                    is ReservationInfo -> reservationInfoUi()
-                    is ReviewInfo -> reviewInfoUi()
+                    is PaymentInfo -> {
+                        gotoNextProcess = "Proceed"
+                        paymentInfoUi()
+                    }
+                    is ReservationInfo -> {
+                        gotoNextProcess = "Proceed"
+                        reservationInfoUi()
+                    }
+                    is ReviewInfo -> {
+                        gotoNextProcess = "Submit"
+                        reviewInfoUi()
+                    }
                 }
                 Spacer(modifier = Modifier.height(Dimensions.large))
                 Row(
@@ -172,7 +188,7 @@ internal fun ReservationScreen(
                     LilyLemonFilledButton(
                         modifier = Modifier. weight(0.4f),
                         onClick = onClickProceed,
-                        buttonText = "Proceed"
+                        buttonText = gotoNextProcess
                     )
                 }
                 Spacer(modifier = Modifier.height(Dimensions.large))
@@ -217,15 +233,20 @@ fun ReservationScreenPreview() = LittleLemonTheme(
                     .padding(horizontal = Dimensions.large)
                     .weight(0.1f)
                     .verticalScroll(rememberScrollState()),
-                customerReserveInfo = CustomerReservation(
+                customerReserveInfo = Customer(
                     salutation = Mr(),
                     fullName = "James Variety Phiri",
                     attendants = 2,
                     date = null,
                     time = null,
-                    email = "variety@hotmail.com",
-                    phoneNum = "0771 079 854",
-                    address = "183 Mbuyaehanda Street"
+                    payeeInfo = Payee(
+                        email = "variety@hotmail.com",
+                        phoneNum = "0771 079 854",
+                        address = "183 Mbuyanehanda Street",
+                        expDate = null,
+                        cardNum = "",
+                        cvv = ""
+                    )
                 )
             )
         },
@@ -285,6 +306,6 @@ private fun ReservationViewModel.reviewInfoUI(): @Composable ColumnScope.() -> U
             .padding(horizontal = Dimensions.large)
             .weight(0.1f)
             .verticalScroll(rememberScrollState()),
-        customerReserveInfo = customerReserveInfo.collectAsState().value
+        customerReserveInfo = customer.collectAsState().value
     )
 }

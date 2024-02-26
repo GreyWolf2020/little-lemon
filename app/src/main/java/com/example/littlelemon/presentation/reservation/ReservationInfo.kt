@@ -18,9 +18,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import com.example.littlelemon.R
 import com.example.littlelemon.ui.theme.Dimensions
 import com.example.littlelemon.ui.theme.LittleLemonTheme
 import java.util.Date
@@ -68,25 +70,25 @@ internal fun ReservationInfoUI(
             LilyLemonTextInput(
                 text = firstName,
                 onTextChange = onFirstNameChange,
-                placeholder = "First Name"
+                placeholder = stringResource(R.string.first_name)
             )
         }
         LilyLemonTextInput(
             modifier = Modifier
                 .padding(
-                vertical = Dimensions.xxSmall
+                    vertical = Dimensions.xxSmall
                 )
                 .fillMaxWidth(0.8f),
             text = middleNames,
             onTextChange = onMiddleNamesChange,
-            placeholder = "Middle Names"
+            placeholder = stringResource(R.string.middle_names)
         )
         LilyLemonTextInput(
             modifier = Modifier
                 .fillMaxWidth(0.6f),
             text = surname,
             onTextChange = onSurnameChange,
-            placeholder = "Surname"
+            placeholder = stringResource(R.string.surname)
         )
         Spacer(modifier = Modifier.height(Dimensions.medium))
         DatePickerInput(
@@ -136,7 +138,7 @@ internal fun ReservationInfoUI(
                 fontSize = 50.sp
             )
             Text(
-                text = "Number of Diner\n$attendants",
+                text = stringResource(R.string.number_of_diner, attendants),
                 style = MaterialTheme.typography.labelMedium,
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.primary

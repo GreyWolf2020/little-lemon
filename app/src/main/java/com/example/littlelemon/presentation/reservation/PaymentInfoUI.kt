@@ -19,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.littlelemon.R
@@ -40,12 +41,14 @@ internal fun PaymentInfoUI(
     onPhoneNumChange: (String) -> Unit = { },
     email: String = "",
     onEmailChange: (String) -> Unit = { },
-    expDate: Long? = Date().time,
+    expDate: Long? = null,
     onExpDateChange: (Long) -> Unit = {  }
 ) {
-    var showDatePicker by remember {
+
+    var showDate by remember {
         mutableStateOf(false)
     }
+
     Column(
         modifier = modifier
     ) {
@@ -53,7 +56,7 @@ internal fun PaymentInfoUI(
             modifier = Modifier.fillMaxWidth(0.8f),
             text = cardNum,
             onTextChange = onCardNumChange,
-            placeholder = "Card #"
+            placeholder = stringResource(R.string.card_num)
         )
         Row(
             modifier = Modifier
@@ -61,38 +64,26 @@ internal fun PaymentInfoUI(
                 .padding(top = Dimensions.xxSmall)
         ) {
             LilyLemonTextInput(
-                modifier = Modifier.weight(0.3f),
+                modifier = Modifier.weight(0.20f),
                 text = cvv,
                 onTextChange = onCvvChange,
-                placeholder = "CVV"
+                placeholder = stringResource(R.string.cvv)
             )
             Spacer(modifier =  Modifier.weight(0.05f),)
-            LilyLemonTextInput(
+            DatePickerInput(
                 modifier = Modifier
-                    .weight(0.65f)
-                    .clickable { showDatePicker = !showDatePicker },
-                text = expDate
-                    ?.let { date ->
-                        SimpleDateFormat("MM - yyyy")
-                            .format(Date(date))
-                    } ?: "",
-                onTextChange = {},
-                placeholder = "Exp Date",
-                leadingIcon = {
-                    Icon(
-                        imageVector = ImageVector.vectorResource(id = R.drawable.calendar)
-                        , contentDescription = "Calender Icon"
-                    )
-                },
-                prefix = {
-                    Spacer(modifier = Modifier.width(Dimensions.medium))
-                }
+                    .weight(0.65f),
+                placeholder = stringResource(R.string.exp_date),
+                dateFormat = "MM-yy",
+                chosenDate = expDate,
+                onClick = { showDate = !showDate }
             )
             DatePicker(
-                showDatePicker = showDatePicker,
+                showDatePicker = showDate,
+                now = expDate ?.let { Date(it)  } ?: Date(),
                 dismissDatePicker = { newDate ->
                     onExpDateChange(newDate)
-                    showDatePicker = !showDatePicker
+                    showDate = !showDate
                 }
             )
         }
@@ -101,7 +92,7 @@ internal fun PaymentInfoUI(
             modifier = Modifier.fillMaxWidth(),
             text = address,
             onTextChange = onAddressChange,
-            placeholder = "Address",
+            placeholder = stringResource(R.string.address),
             minLines = 4,
         )
         Spacer(modifier = Modifier.height(Dimensions.large))
@@ -109,7 +100,7 @@ internal fun PaymentInfoUI(
             modifier = Modifier.fillMaxWidth(0.6f),
             text = phoneNum,
             onTextChange = onPhoneNumChange,
-            placeholder = "Phone #"
+            placeholder = stringResource(R.string.phone_num)
         )
         LilyLemonTextInput(
             modifier = Modifier

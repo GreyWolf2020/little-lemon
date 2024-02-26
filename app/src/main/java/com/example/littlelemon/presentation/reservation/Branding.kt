@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -68,7 +69,7 @@ private fun LittleLemonBranding(
                 horizontalAlignment = Alignment.Start,
             ) {
                 Text(
-                    text = "Little Lemon",
+                    text = stringResource(R.string.little_lemon),
                     color = MaterialTheme.colorScheme.tertiary,
                     style = MaterialTheme.typography.titleLarge,
                     textAlign = TextAlign.Center,
@@ -76,7 +77,7 @@ private fun LittleLemonBranding(
 
                 )
                 Text(
-                    text = "Chicago",
+                    text = stringResource(R.string.chicago),
                     color = MaterialTheme.colorScheme.onPrimary,
                     style = MaterialTheme.typography.titleMedium,
                     textAlign = TextAlign.Center,
@@ -85,7 +86,7 @@ private fun LittleLemonBranding(
             }
             Image(
                 painter = painterResource(R.drawable.hero_image),
-                contentDescription = "Hero section image",
+                contentDescription = stringResource(R.string.hero_section_image),
                 modifier = Modifier
                     .padding(end = Dimensions.large)
                     .align(Alignment.BottomEnd)
@@ -139,7 +140,7 @@ private fun ReservationHeader(
                 enabled = true
             ) {
                 Icon(
-                    imageVector = Icons.Filled.ArrowBack,
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = "Back button"
                 )
             }
