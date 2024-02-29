@@ -18,7 +18,7 @@ class HomeViewModel(
     val menuRepository: MenuRepository
 ) : ViewModel() {
     private val _allCategories = MutableStateFlow<AllCategories>(AllCategories())
-    val allCategories = _allCategories.asStateFlow()
+    internal val allCategories = _allCategories.asStateFlow()
 
     private val _dishes = MutableStateFlow<List<Dish>>(listOf<Dish>())
     val dishes = _dishes.asStateFlow()

@@ -12,6 +12,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -38,6 +39,7 @@ import com.example.littlelemon.MyApp
 import com.example.littlelemon.data.local.userprofile.UserProfile
 import com.example.littlelemon.presentation.util.viewModelFactory
 import com.example.littlelemon.presentation.common.OnboardingTopAppBar
+import com.example.littlelemon.ui.theme.LittleLemonTheme
 
 val OnboardingRoute = "onboardingScreen"
 fun NavGraphBuilder.onboardingScreen(
@@ -157,15 +159,20 @@ fun OnboardingScreen(
 
 @Preview(showBackground = true)
 @Composable
-fun OnboardingPreview() = OnboardingScreen(
-    saveUser = {},
-    onUserSurnameChange = {},
-    onUserNameChange = {},
-    onUserEmailChanged = {},
-    userSurname = "Phiri",
-    userName = "Gregory",
-    userEmail = "gregphiri"
-)
+fun OnboardingPreview() = LittleLemonTheme(
+    darkTheme = false,
+    dynamicColor = false
+) {
+    OnboardingScreen(
+        saveUser = {},
+        onUserSurnameChange = {},
+        onUserNameChange = {},
+        onUserEmailChanged = {},
+        userSurname = "Phiri",
+        userName = "Gregory",
+        userEmail = "gregphiri"
+    )
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -191,8 +198,9 @@ fun LabelTextInput(
                 .fillMaxWidth(),
             readOnly = isReadOnly,
             shape = RoundedCornerShape(8.dp),
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                textColor =  MaterialTheme.colorScheme.primary
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedTextColor = MaterialTheme.colorScheme.primary,
+                unfocusedTextColor = MaterialTheme.colorScheme.primary
             )
         )
     }
