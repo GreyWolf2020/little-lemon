@@ -2,12 +2,16 @@ package com.example.littlelemon.presentation.home
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.DrawerState
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -17,16 +21,20 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.example.littlelemon.MyApp
+import com.example.littlelemon.presentation.common.LittleLemonNavDrawer
 import com.example.littlelemon.presentation.profile.navigateToProfile
 import com.example.littlelemon.presentation.util.viewModelFactory
 import com.example.littlelemon.presentation.common.MyTopAppBar
 import com.example.littlelemon.presentation.menudescription.navigateToMenuDescription
 import com.example.littlelemon.presentation.reservation.navigateToReservation
 import com.example.littlelemon.ui.theme.LittleLemonTheme
+import kotlinx.coroutines.launch
 
 const val HomeRoute = "home"
+private const val HomeIndex = 0
 fun NavGraphBuilder.homeScreen(
-    navController: NavHostController
+    navController: NavHostController,
+    onClickMenu: () -> Unit
 ) {
     composable(HomeRoute) {
         val viewModel = viewModel<HomeViewModel>(
@@ -48,7 +56,9 @@ fun NavGraphBuilder.homeScreen(
             onCategoryClicked = viewModel::onCategoryClicked,
             onClickSearch = viewModel::onSearch,
             dishes = viewModel.dishes.collectAsState().value,
+            onClickMenu = onClickMenu
         )
+
     }
 }
 
@@ -78,6 +88,7 @@ internal fun HomeScreen(
     dishes: List<Dish>,
     onCategoryClicked: (DishCategory) -> Unit,
     onClickSearch: () -> Unit,
+    onClickMenu: () -> Unit = {  },
     modifier: Modifier = Modifier
 ) {
     Scaffold(
@@ -85,7 +96,8 @@ internal fun HomeScreen(
           MyTopAppBar(
               navigateToHome = navigateToHome,
               onclickProfile = navigateToProfile,
-              onclickMenu = { /*TODO*/ })
+              onclickMenu = onClickMenu
+          )
         },
         modifier = modifier,
     ) { paddingValues ->

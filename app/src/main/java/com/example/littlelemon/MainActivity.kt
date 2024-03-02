@@ -14,7 +14,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             LittleLemonTheme (
-              darkTheme = false,
+                darkTheme = false,
                 dynamicColor = false
             ) {
                 // A surface container using the 'background' color from the theme

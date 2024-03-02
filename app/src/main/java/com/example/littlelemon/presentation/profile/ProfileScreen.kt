@@ -2,11 +2,14 @@ package com.example.littlelemon.presentation.profile
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -16,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -25,9 +29,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import com.example.littlelemon.MyApp
 import com.example.littlelemon.data.local.userprofile.UserProfile
-import com.example.littlelemon.presentation.util.viewModelFactory
-import com.example.littlelemon.presentation.onboarding.LabelTextInput
 import com.example.littlelemon.presentation.common.OnboardingTopAppBar
+import com.example.littlelemon.presentation.onboarding.LabelTextInput
+import com.example.littlelemon.presentation.util.viewModelFactory
+import com.example.littlelemon.ui.theme.LittleLemonTheme
 
 private const val ProfileRoute = "profile"
 fun NavGraphBuilder.profileScreen(
@@ -42,12 +47,14 @@ fun NavGraphBuilder.profileScreen(
         val profileState by viewModel.userProfile.collectAsState()
         ProfileScreen(
             profileState = profileState,
-            removeProfile = viewModel::removeUserProfile
+            removeProfile = viewModel::removeUserProfile,
         )
+
     }
 }
 
 fun NavController.navigateToProfile() {
+    if (this.currentBackStackEntry?.destination?.route != ProfileRoute)
         this.navigate(ProfileRoute)
 }
 
@@ -139,4 +146,26 @@ fun UserProfileInfo(
             .fillMaxWidth()
             .padding(horizontal = 20.dp)
     )
+}
+
+@Preview
+@Composable
+fun ProfileScreenPreview() = LittleLemonTheme(
+    darkTheme = false,
+    dynamicColor = false
+) {
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.background
+    ) {
+        ProfileScreen(
+            UserProfile(
+                name = "Gregory",
+                surname = "Phiri",
+                email = "gregphiri95@gmail.com"
+            ),
+            removeProfile = {}
+        )
+    }
+
 }

@@ -6,12 +6,16 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.DrawerState
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -30,13 +34,16 @@ import coil.request.ImageRequest
 import com.example.littlelemon.MyApp
 import com.example.littlelemon.R
 import com.example.littlelemon.presentation.common.DeliveryOptions
+import com.example.littlelemon.presentation.common.LittleLemonNavDrawer
 import com.example.littlelemon.presentation.common.MyTopAppBar
 import com.example.littlelemon.presentation.home.Dish
 import com.example.littlelemon.presentation.home.navigateToHome
 import com.example.littlelemon.presentation.profile.navigateToProfile
+import com.example.littlelemon.presentation.reservation.navigateToReservation
 import com.example.littlelemon.presentation.util.viewModelFactory
 import com.example.littlelemon.ui.theme.AppTheme
 import com.example.littlelemon.ui.theme.LittleLemonTheme
+import kotlinx.coroutines.launch
 
 private const val dishTitleArg = "dishTitle"
 private const val MenuDescriptionRoute = "menuDescription"
@@ -52,7 +59,8 @@ internal class ConversationViewModel(...,
     private val conversationArgs = ConversationArgs(savedStateHandle)
 }*/
 fun NavGraphBuilder.menuDescriptionScreen(
-    navController: NavHostController
+    navController: NavHostController,
+    onClickMenu: () -> Unit
 ) {
     composable(
         "$MenuDescriptionRoute/{$dishTitleArg}",
@@ -72,14 +80,13 @@ fun NavGraphBuilder.menuDescriptionScreen(
                 )
             }
         )
-
-
         MenuDescriptionScreen(
             navigateToHome = navController::navigateToHome,
             navigateToProfile = navController::navigateToProfile,
             viewModel.dish.collectAsState().value,
             viewModel.topings.collectAsState(listOf()).value,
-            viewModel::onTopingSelected
+            viewModel::onTopingSelected,
+            onClickMenu = onClickMenu
         )
     }
 
@@ -97,7 +104,8 @@ fun MenuDescriptionScreen(
     navigateToProfile: () -> Unit,
     dish: Dish,
     topings: List<Toping>,
-    onTopingSelected: (Toping) -> Unit
+    onTopingSelected: (Toping) -> Unit,
+    onClickMenu: () -> Unit = {  }
 ) {
     val context = LocalContext.current
     Scaffold(
@@ -105,7 +113,7 @@ fun MenuDescriptionScreen(
             MyTopAppBar(
                 navigateToHome = navigateToHome,
                 onclickProfile = navigateToProfile,
-                onclickMenu = {}
+                onclickMenu = onClickMenu
             )
         }
 
