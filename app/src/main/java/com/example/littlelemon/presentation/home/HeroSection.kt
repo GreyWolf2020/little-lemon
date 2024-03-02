@@ -4,7 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -15,8 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -36,7 +33,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.littlelemon.R
-import com.example.littlelemon.presentation.common.MyButton
+import com.example.littlelemon.presentation.common.LilyLemonFilledButton
 import com.example.littlelemon.ui.theme.AppTheme
 import com.example.littlelemon.ui.theme.LittleLemonTheme
 
@@ -98,7 +95,7 @@ fun HeroSection(
                         fontWeight = FontWeight.Medium,
                         style = MaterialTheme.typography.bodyMedium
                     )
-                    MyButton(
+                    LilyLemonFilledButton(
                         onClick = onClickReservation,
                         buttonText = "Reservation",
                         modifier = Modifier.fillMaxWidth(0.9f)
@@ -127,7 +124,8 @@ fun HeroSection(
                     .fillMaxWidth()
                     .height(50.dp),
                 colors = TextFieldDefaults.textFieldColors(
-                    textColor = MaterialTheme.colorScheme.primary
+                    focusedTextColor = MaterialTheme.colorScheme.primary,
+                    unfocusedTextColor = MaterialTheme.colorScheme.primary
                 ),
 
             )

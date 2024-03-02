@@ -19,7 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
-import com.example.littlelemon.presentation.common.MyButton
+import com.example.littlelemon.presentation.common.LilyLemonFilledButton
 import com.example.littlelemon.ui.theme.AppTheme
 import com.example.littlelemon.ui.theme.LittleLemonTheme
 import com.example.littlelemon.ui.theme.karlaFamilyRegular
@@ -197,7 +197,7 @@ fun AddToCartButton(
     onClickAddToCart: () -> Unit,
     price: String
 ) {
-    MyButton(
+    LilyLemonFilledButton(
         onClick = onClickAddToCart,
         buttonText = "Add for $$price"
     )

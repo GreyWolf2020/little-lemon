@@ -2,7 +2,9 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="UserOrderRepoImplTest">
+ feature/order
+      <entry key="HonoficSelector">
+        main
         <State />
       </entry>
       <entry key="app">
