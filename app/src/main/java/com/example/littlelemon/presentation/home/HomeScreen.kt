@@ -31,7 +31,10 @@ fun NavGraphBuilder.homeScreen(
     composable(HomeRoute) {
         val viewModel = viewModel<HomeViewModel>(
             factory = viewModelFactory {
-                HomeViewModel(MyApp.appModule.menuRepository)
+                HomeViewModel(
+                    MyApp.appModule.menuRepository,
+                    MyApp.appModule.userOrderRepo
+                )
             }
         )
         HomeScreen(

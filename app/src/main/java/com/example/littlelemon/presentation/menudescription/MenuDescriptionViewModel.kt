@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.littlelemon.data.local.menu.MenuRepository
+import com.example.littlelemon.data.local.userorder.UserOrderRepository
 import com.example.littlelemon.presentation.home.Dish
 import com.example.littlelemon.presentation.home.toDish
 import kotlinx.coroutines.Dispatchers
@@ -17,6 +18,7 @@ import kotlinx.coroutines.launch
 const val TAG = "MenuDescriptionViewModel"
 class MenuDescriptionViewModel(
     val menuRepo: MenuRepository,
+    val userOrderRepository: UserOrderRepository,
     private val dishName: String
 ) : ViewModel() {
     private val _dish = MutableStateFlow<Dish>(

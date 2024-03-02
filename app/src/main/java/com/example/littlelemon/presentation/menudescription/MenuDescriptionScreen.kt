@@ -67,6 +67,7 @@ fun NavGraphBuilder.menuDescriptionScreen(
             factory = viewModelFactory {
                 MenuDescriptionViewModel(
                     MyApp.appModule.menuRepository,
+                    MyApp.appModule.userOrderRepo,
                     backStackEntry.arguments?.getString(dishTitleArg) ?: ""
                 )
             }

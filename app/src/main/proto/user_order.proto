@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option java_package = "com.example.littlelemon";
+option java_multiple_files = true;
+
+message UserOrderMessage {
+  enum Currency {
+    ZW=0;
+    USD=1;
+  }
+  message OrderItem {
+    int32 quantity=1;
+    string name=2;
+    Currency currency=3;
+    float price=4;
+  }
+  repeated OrderItem orderItem=1;
+}
