@@ -1,11 +1,17 @@
 package com.example.littlelemon.presentation.reservation
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.littlelemon.data.local.userorder.UserOrderRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
-internal class ReservationViewModel : ViewModel() {
+internal class ReservationViewModel(
+    val userOrderRepository: UserOrderRepository
+) : ViewModel() {
 
     private val _customer: MutableStateFlow<Customer> = MutableStateFlow(Customer())
     internal val customer = _customer.asStateFlow()
@@ -43,6 +49,9 @@ internal class ReservationViewModel : ViewModel() {
     private val _time = MutableStateFlow<Time?>(null)
     internal val time = _time.asStateFlow()
 
+    private val _isUserOrderEmpty = MutableStateFlow<Boolean>(false)
+    internal val isUserOrderEmpty = _isUserOrderEmpty.asStateFlow()
+
     private val _customerReserveInfo = MutableStateFlow<CustomerReservation>(
         CustomerReservation(
             fullName = "",
@@ -67,6 +76,15 @@ internal class ReservationViewModel : ViewModel() {
 
     private val _attendants = MutableStateFlow<Short>(0)
     internal val attendants = _attendants.asStateFlow()
+
+    init {
+        viewModelScope.launch(Dispatchers.IO) {
+            userOrderRepository.isOrderEmpty().collect {
+                _isUserOrderEmpty.update { it }
+            }
+        }
+
+    }
 
     internal fun dismissSnackBar() = _showSnackBar.update { false }
     internal fun onAttendantInc() = _attendants.update { it.inc() }

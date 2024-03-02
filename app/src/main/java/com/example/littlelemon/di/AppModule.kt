@@ -5,6 +5,8 @@ import com.example.littlelemon.data.local.menu.MenuDatabase
 import com.example.littlelemon.data.local.menu.MenuItemDao
 import com.example.littlelemon.data.local.menu.MenuRepository
 import com.example.littlelemon.data.local.menu.MenuRepositoryImpl
+import com.example.littlelemon.data.local.userorder.UserOrderRepoImpl
+import com.example.littlelemon.data.local.userorder.UserOrderRepository
 import com.example.littlelemon.data.local.userprofile.UserProfileRepoImpl
 import com.example.littlelemon.data.local.userprofile.UserProfileRepository
 import com.example.littlelemon.data.remote.menu.MenuApi
@@ -22,6 +24,7 @@ interface AppModule {
     val menuRepository: MenuRepository
     val menuApi: MenuApi
     val menuItemDao: MenuItemDao
+    val userOrderRepo: UserOrderRepository
 }
 
 class AppModuleImpl(
@@ -46,5 +49,7 @@ class AppModuleImpl(
         get() = MenuDatabase
             .getDatabase(context)
             .menuItemDao()
+    override val userOrderRepo: UserOrderRepository
+        get() = UserOrderRepoImpl(context)
 
 }

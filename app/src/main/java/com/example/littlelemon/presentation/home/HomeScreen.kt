@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FabPosition
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -21,11 +22,13 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.example.littlelemon.MyApp
+import com.example.littlelemon.presentation.common.BasketFab
 import com.example.littlelemon.presentation.common.LittleLemonNavDrawer
 import com.example.littlelemon.presentation.profile.navigateToProfile
 import com.example.littlelemon.presentation.util.viewModelFactory
 import com.example.littlelemon.presentation.common.MyTopAppBar
 import com.example.littlelemon.presentation.menudescription.navigateToMenuDescription
+import com.example.littlelemon.presentation.order.navigateToOrder
 import com.example.littlelemon.presentation.reservation.navigateToReservation
 import com.example.littlelemon.ui.theme.LittleLemonTheme
 import kotlinx.coroutines.launch
@@ -39,7 +42,10 @@ fun NavGraphBuilder.homeScreen(
     composable(HomeRoute) {
         val viewModel = viewModel<HomeViewModel>(
             factory = viewModelFactory {
-                HomeViewModel(MyApp.appModule.menuRepository)
+                HomeViewModel(
+                    MyApp.appModule.menuRepository,
+                    MyApp.appModule.userOrderRepo
+                )
             }
         )
         HomeScreen(
@@ -47,6 +53,7 @@ fun NavGraphBuilder.homeScreen(
             navigateToMenuDesc = navController::navigateToMenuDescription,
             navigateToReservation = navController::navigateToReservation,
             navigateToProfile = navController::navigateToProfile,
+            navigateToOrder = navController::navigateToOrder,
             allCategories = viewModel.allCategories.collectAsState().value,
             dishName = viewModel.dishName.collectAsState().value,
             onDishNameChanged = viewModel::onDishNameChanged,
@@ -79,6 +86,7 @@ internal fun HomeScreen(
     navigateToMenuDesc: (String) -> Unit,
     navigateToReservation: () -> Unit,
     navigateToProfile: () -> Unit,
+    navigateToOrder: () -> Unit,
     allCategories: AllCategories,
     dishName: String,
     onDishNameChanged: (String) -> Unit,
@@ -86,6 +94,7 @@ internal fun HomeScreen(
     onCategoryClicked: (DishCategory) -> Unit,
     onClickSearch: () -> Unit,
     onClickMenu: () -> Unit = {  },
+    isBasketEmpty: Boolean = true,
     modifier: Modifier = Modifier
 ) {
     Scaffold(
@@ -97,6 +106,13 @@ internal fun HomeScreen(
           )
         },
         modifier = modifier,
+        floatingActionButtonPosition = FabPosition.End,
+        floatingActionButton = {
+            BasketFab(
+                isBasketEmpty = isBasketEmpty,
+                goToOrder = navigateToOrder
+            )
+        }
     ) { paddingValues ->
         Surface(
             modifier = Modifier.padding(paddingValues),
@@ -134,6 +150,7 @@ fun HomeScreenPreview() = LittleLemonTheme(
         navigateToMenuDesc = {},
         navigateToReservation = {},
         navigateToProfile = {  },
+        navigateToOrder = {},
         allCategories = AllCategories(),
         dishName = "Dish",
         onDishNameChanged = {},
