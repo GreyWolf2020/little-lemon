@@ -30,17 +30,27 @@ class HomeViewModel(
 
     private val allDishes = MutableStateFlow<List<Dish>>(listOf())
 
+    private val _isUserOrderEmpty = MutableStateFlow<Boolean>(false)
+    internal val isUserOrderEmpty = _isUserOrderEmpty.asStateFlow()
+
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            menuRepository.getMenu().collect { menuItems ->
-                allDishes.update {
-                    menuItems.map(MenuItemLocal::toDish)
+            launch {
+                menuRepository.getMenu().collect { menuItems ->
+                    allDishes.update {
+                        menuItems.map(MenuItemLocal::toDish)
+                    }
+                    _dishes.update {
+                        menuItems.map(MenuItemLocal::toDish)
+                    }
                 }
-                _dishes.update {
-                    menuItems.map(MenuItemLocal::toDish)
-                }
-
             }
+            launch {
+                userOrderRepository.isOrderEmpty().collect {
+                    _isUserOrderEmpty.update { it }
+                }
+            }
+
         }
     }
 

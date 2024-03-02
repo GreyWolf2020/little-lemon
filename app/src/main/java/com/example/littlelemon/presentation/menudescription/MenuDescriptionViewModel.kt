@@ -40,13 +40,22 @@ class MenuDescriptionViewModel(
     val topings = combine(feta.asStateFlow(), dressing.asStateFlow(),pamersan.asStateFlow()) { f1, f2, f3 ->
         listOf(f1, f2, f3)
     }
+    private val _isUserOrderEmpty = MutableStateFlow<Boolean>(false)
+    internal val isUserOrderEmpty = _isUserOrderEmpty.asStateFlow()
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            _dish.update {
-                menuRepo
-                    .getMenuItem(dishName)
-                    .toDish()
+            launch {
+                _dish.update {
+                    menuRepo
+                        .getMenuItem(dishName)
+                        .toDish()
+                }
+            }
+            launch {
+                userOrderRepository.isOrderEmpty().collect {
+                    _isUserOrderEmpty.update { it }
+                }
             }
         }
     }
