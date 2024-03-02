@@ -65,7 +65,9 @@ android {
 val protobufVersion = "3.20.1"
 
 dependencies {
+    testImplementation("junit:junit:4.12")
     val room_version = "2.5.2"
+    val androidXTestVersion = "4.12"
 
     implementation("androidx.room:room-runtime:$room_version")
     implementation("io.coil-kt:coil-compose:2.4.0")
@@ -89,6 +91,8 @@ dependencies {
     implementation("io.ktor:ktor-client-content-negotiation:2.3.3")
     implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.3")
     testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test:runner:1.5.2")
+    androidTestImplementation("androidx.test:rules:1.5.0")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))

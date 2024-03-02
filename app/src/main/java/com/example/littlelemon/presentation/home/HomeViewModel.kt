@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.littlelemon.data.local.menu.MenuItemLocal
 import com.example.littlelemon.data.local.menu.MenuRepository
+import com.example.littlelemon.data.local.userorder.UserOrderRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +16,8 @@ import kotlinx.coroutines.launch
 private val TAG = "HOMEVIEWMODEL"
 @OptIn(ExperimentalCoroutinesApi::class)
 class HomeViewModel(
-    val menuRepository: MenuRepository
+    val menuRepository: MenuRepository,
+    val userOrderRepository: UserOrderRepository
 ) : ViewModel() {
     private val _allCategories = MutableStateFlow<AllCategories>(AllCategories())
     internal val allCategories = _allCategories.asStateFlow()
@@ -28,17 +30,27 @@ class HomeViewModel(
 
     private val allDishes = MutableStateFlow<List<Dish>>(listOf())
 
+    private val _isUserOrderEmpty = MutableStateFlow<Boolean>(false)
+    internal val isUserOrderEmpty = _isUserOrderEmpty.asStateFlow()
+
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            menuRepository.getMenu().collect { menuItems ->
-                allDishes.update {
-                    menuItems.map(MenuItemLocal::toDish)
+            launch {
+                menuRepository.getMenu().collect { menuItems ->
+                    allDishes.update {
+                        menuItems.map(MenuItemLocal::toDish)
+                    }
+                    _dishes.update {
+                        menuItems.map(MenuItemLocal::toDish)
+                    }
                 }
-                _dishes.update {
-                    menuItems.map(MenuItemLocal::toDish)
-                }
-
             }
+            launch {
+                userOrderRepository.isOrderEmpty().collect {
+                    _isUserOrderEmpty.update { it }
+                }
+            }
+
         }
     }
 

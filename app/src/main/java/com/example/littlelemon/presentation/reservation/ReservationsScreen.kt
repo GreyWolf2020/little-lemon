@@ -13,6 +13,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FabPosition
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
@@ -37,11 +38,15 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
+import com.example.littlelemon.MyApp
+import com.example.littlelemon.di.AppModule
+import com.example.littlelemon.presentation.common.BasketFab
 import com.example.littlelemon.presentation.common.LilyLemonFilledButton
 import com.example.littlelemon.presentation.common.LilyLemonUnFilledButton
 import com.example.littlelemon.presentation.common.LittleLemonNavDrawer
 import com.example.littlelemon.presentation.common.MyTopAppBar
 import com.example.littlelemon.presentation.home.navigateToHome
+import com.example.littlelemon.presentation.order.navigateToOrder
 import com.example.littlelemon.presentation.profile.navigateToProfile
 import com.example.littlelemon.presentation.util.viewModelFactory
 import com.example.littlelemon.ui.theme.Dimensions
@@ -59,7 +64,7 @@ fun NavGraphBuilder.reservationScreen(
     ) {
         val viewModel = viewModel<ReservationViewModel>(
             factory = viewModelFactory {
-                ReservationViewModel()
+                ReservationViewModel(MyApp.appModule.userOrderRepo)
             }
         )
         val gotoHome = viewModel.gotoHome.collectAsState().value
@@ -68,6 +73,7 @@ fun NavGraphBuilder.reservationScreen(
             navController.navigateToHome()
         ReservationScreen(
             navigateToHome = navController::navigateToHome,
+            navigateToOrder = navController::navigateToOrder,
             navigateToProfile = navController::navigateToProfile,
             selectedSexn = viewModel.selectedSection.collectAsState().value,
             onSexnSelected = viewModel::onSectionSelected,
@@ -92,9 +98,11 @@ fun NavController.navigateToReservation() {
 @Composable
 internal fun ReservationScreen(
     modifier: Modifier = Modifier,
+    isBasketEmpty: Boolean = true,
     selectedSexn: ReservationSection,
     onSexnSelected: (ReservationSection) -> Unit,
     navigateToHome: () -> Unit,
+    navigateToOrder: () -> Unit,
     navigateToProfile: () -> Unit,
     upPress: () -> Unit,
     onClickProceed: () -> Unit,
@@ -142,6 +150,13 @@ internal fun ReservationScreen(
                 navigateToHome = navigateToHome,
                 onclickProfile = navigateToProfile,
                 onclickMenu = onClickMenu
+            )
+        },
+        floatingActionButtonPosition = FabPosition.End,
+        floatingActionButton = {
+            BasketFab(
+                isBasketEmpty = isBasketEmpty,
+                goToOrder = navigateToOrder
             )
         }
     ) { paddingValues ->
@@ -219,6 +234,7 @@ fun ReservationScreenPreview() = LittleLemonTheme(
         navigateToHome = { },
         navigateToProfile = { },
         upPress = { },
+        navigateToOrder = { },
         onClickProceed = { },
         reservationInfoUi = {
             ReservationInfoUI(

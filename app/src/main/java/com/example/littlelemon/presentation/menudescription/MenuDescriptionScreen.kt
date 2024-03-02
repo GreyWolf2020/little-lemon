@@ -38,6 +38,7 @@ import com.example.littlelemon.presentation.common.LittleLemonNavDrawer
 import com.example.littlelemon.presentation.common.MyTopAppBar
 import com.example.littlelemon.presentation.home.Dish
 import com.example.littlelemon.presentation.home.navigateToHome
+import com.example.littlelemon.presentation.order.navigateToOrder
 import com.example.littlelemon.presentation.profile.navigateToProfile
 import com.example.littlelemon.presentation.reservation.navigateToReservation
 import com.example.littlelemon.presentation.util.viewModelFactory
@@ -52,12 +53,7 @@ internal class MenuDescriptionArg(val dishId: String) {
     constructor(savedStateHandle: SavedStateHandle) : this(checkNotNull(savedStateHandle[dishTitleArg]) as String)
 }
 
-/* in viewModel
-internal class ConversationViewModel(...,
-                                     savedStateHandle: SavedStateHandle
-) : ViewModel() {
-    private val conversationArgs = ConversationArgs(savedStateHandle)
-}*/
+
 fun NavGraphBuilder.menuDescriptionScreen(
     navController: NavHostController,
     onClickMenu: () -> Unit
@@ -75,6 +71,7 @@ fun NavGraphBuilder.menuDescriptionScreen(
             factory = viewModelFactory {
                 MenuDescriptionViewModel(
                     MyApp.appModule.menuRepository,
+                    MyApp.appModule.userOrderRepo,
                     backStackEntry.arguments?.getString(dishTitleArg) ?: ""
                 )
             }
@@ -82,6 +79,7 @@ fun NavGraphBuilder.menuDescriptionScreen(
         MenuDescriptionScreen(
             navigateToHome = navController::navigateToHome,
             navigateToProfile = navController::navigateToProfile,
+            navigateToOrder = navController::navigateToOrder,
             viewModel.dish.collectAsState().value,
             viewModel.topings.collectAsState(listOf()).value,
             viewModel::onTopingSelected,
@@ -101,9 +99,11 @@ fun NavController.navigateToMenuDescription(dishTitle: String) {
 fun MenuDescriptionScreen(
     navigateToHome: () -> Unit,
     navigateToProfile: () -> Unit,
+    navigateToOrder: () -> Unit,
     dish: Dish,
     topings: List<Toping>,
     onTopingSelected: (Toping) -> Unit,
+    isBasketEmpty: Boolean = false,
     onClickMenu: () -> Unit = {  }
 ) {
     val context = LocalContext.current
@@ -185,6 +185,7 @@ fun MenuDescriptionScreenPreview() = LittleLemonTheme(
     MenuDescriptionScreen(
         navigateToHome = {},
         navigateToProfile = {},
+        navigateToOrder = {},
         dish = Dish(
             name = "Bruschetta",
             description = "Our Bruschetta is made from grilled bread that has been smeared with garlic and seasoned with salt and olive oil. Topped with chopped tomatoes, oregano and fresh bazil.",

@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.littlelemon.data.local.menu.MenuRepository
+import com.example.littlelemon.data.local.userorder.UserOrderRepository
 import com.example.littlelemon.presentation.home.Dish
 import com.example.littlelemon.presentation.home.toDish
 import kotlinx.coroutines.Dispatchers
@@ -17,6 +18,7 @@ import kotlinx.coroutines.launch
 const val TAG = "MenuDescriptionViewModel"
 class MenuDescriptionViewModel(
     val menuRepo: MenuRepository,
+    val userOrderRepository: UserOrderRepository,
     private val dishName: String
 ) : ViewModel() {
     private val _dish = MutableStateFlow<Dish>(
@@ -38,13 +40,22 @@ class MenuDescriptionViewModel(
     val topings = combine(feta.asStateFlow(), dressing.asStateFlow(),pamersan.asStateFlow()) { f1, f2, f3 ->
         listOf(f1, f2, f3)
     }
+    private val _isUserOrderEmpty = MutableStateFlow<Boolean>(false)
+    internal val isUserOrderEmpty = _isUserOrderEmpty.asStateFlow()
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            _dish.update {
-                menuRepo
-                    .getMenuItem(dishName)
-                    .toDish()
+            launch {
+                _dish.update {
+                    menuRepo
+                        .getMenuItem(dishName)
+                        .toDish()
+                }
+            }
+            launch {
+                userOrderRepository.isOrderEmpty().collect {
+                    _isUserOrderEmpty.update { it }
+                }
             }
         }
     }
