@@ -24,7 +24,7 @@ import com.example.littlelemon.ui.theme.LittleLemonTheme
 fun CutleryOffer(
     modifier: Modifier = Modifier,
     isCutlerySelected: Boolean = false,
-    onClickGetCutlery: (Boolean) -> Unit
+    onClickGetCutlery: () -> Unit
 ) {
     Surface(
         modifier = modifier
@@ -54,7 +54,7 @@ fun CutleryOffer(
             Spacer(modifier = Modifier.weight(0.3f))
             RadioButton(
                 selected = isCutlerySelected,
-                onClick = { onClickGetCutlery(isCutlerySelected) },
+                onClick = onClickGetCutlery,
                 modifier = Modifier.weight(0.06f)
             )
         }
