@@ -65,6 +65,7 @@ android {
 val protobufVersion = "3.20.1"
 
 dependencies {
+    implementation("androidx.compose.material3:material3-android:1.2.0")
     testImplementation("junit:junit:4.12")
     val room_version = "2.5.2"
     val androidXTestVersion = "4.12"

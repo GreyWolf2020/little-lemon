@@ -10,6 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -30,7 +31,7 @@ class HomeViewModel(
 
     private val allDishes = MutableStateFlow<List<Dish>>(listOf())
 
-    private val _isUserOrderEmpty = MutableStateFlow<Boolean>(false)
+    private val _isUserOrderEmpty = MutableStateFlow<Boolean>(true)
     internal val isUserOrderEmpty = _isUserOrderEmpty.asStateFlow()
 
     init {
@@ -46,8 +47,12 @@ class HomeViewModel(
                 }
             }
             launch {
-                userOrderRepository.isOrderEmpty().collect {
-                    _isUserOrderEmpty.update { it }
+                val isOrderEmptyFlow = userOrderRepository.isOrderEmpty()
+                isOrderEmptyFlow.collect { isOrderEmpty ->
+                    _isUserOrderEmpty.update { isOrderEmpty }
+                }
+                _isUserOrderEmpty.update {
+                    isOrderEmptyFlow.first()
                 }
             }
 
@@ -134,25 +139,18 @@ class HomeViewModel(
 data class Dish(
     val name: String,
     val description: String,
-    val price: String,
+    val price: Double,
     val imageUrl: String,
-    val category: String
-) {
-    var dishCnt = 0
-    fun incrementDishCnt() = dishCnt++
-    fun decrementDishCount(): Unit {
-        if (dishCnt <= 0)
-            return
-        dishCnt--
-    }
-}
-
+    val category: String,
+    val qty: Int
+)
 fun MenuItemLocal.toDish() : Dish = Dish(
     name = title,
     description = description,
-    price = price,
+    price = price.toDouble(),
     imageUrl = image,
-    category = category
+    category = category,
+    qty = 0
 )
 
 sealed class DishCategory(

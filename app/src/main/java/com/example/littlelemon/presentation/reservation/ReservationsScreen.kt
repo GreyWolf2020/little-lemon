@@ -84,7 +84,8 @@ fun NavGraphBuilder.reservationScreen(
             reservationInfoUi = viewModel.reservationInfoUI(),
             showSnackBar = viewModel.showSnackBar.collectAsState().value,
             dismissSnackBar = viewModel::dismissSnackBar,
-            onClickMenu = onClickMenu
+            onClickMenu = onClickMenu,
+            isBasketEmpty = viewModel.isUserOrderEmpty.collectAsState().value
         )
 
     }

@@ -33,6 +33,7 @@ fun Ordering(
     onIncNumOfDish: () -> Unit,
     onDecNumOfDish: () -> Unit,
     onAddToBasket: () -> Unit,
+    enableAddToBasketButton: Boolean = false,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -53,7 +54,8 @@ fun Ordering(
         )
         AddToCartButton(
             onClickAddToCart = onAddToBasket,
-            price = dishPrice
+            price = dishPrice,
+            enable = enableAddToBasketButton
         )
 
     }
@@ -144,14 +146,15 @@ fun NumberOfItems(
         horizontalArrangement = Arrangement.Center
     ) {
         TextButton(
-            onClick = onAdd
+            onClick = onSubract
         ) {
             Text(
-                text = "+",
+                text = "-",
                 fontSize = 40.sp,
                 fontWeight = FontWeight.Bold,
                 fontFamily = karlaFamilyRegular,
                 color = MaterialTheme.colorScheme.primary
+
             )
         }
         Text(
@@ -164,16 +167,15 @@ fun NumberOfItems(
                 .padding(horizontal = AppTheme.dimens.small)
         )
         TextButton(
-            onClick = onSubract
+            onClick = onAdd
         ) {
             Text(
-                text = "-",
+                text = "+",
                 fontSize = 40.sp,
                 fontWeight = FontWeight.Bold,
                 fontFamily = karlaFamilyRegular,
                 color = MaterialTheme.colorScheme.primary
-
-                )
+            )
         }
     }
 }
@@ -195,9 +197,11 @@ fun NumberOfItemsPreview() = LittleLemonTheme(
 @Composable
 fun AddToCartButton(
     onClickAddToCart: () -> Unit,
-    price: String
+    price: String,
+    enable: Boolean = true
 ) {
     LilyLemonFilledButton(
+        enableButton = enable,
         onClick = onClickAddToCart,
         buttonText = "Add for $$price"
     )

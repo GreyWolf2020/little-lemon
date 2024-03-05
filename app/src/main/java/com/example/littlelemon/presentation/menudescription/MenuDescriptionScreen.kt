@@ -1,21 +1,25 @@
 package com.example.littlelemon.presentation.menudescription
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.DrawerState
-import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FabPosition
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Surface
-import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -33,26 +37,25 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.littlelemon.MyApp
 import com.example.littlelemon.R
+import com.example.littlelemon.presentation.common.BasketFab
 import com.example.littlelemon.presentation.common.DeliveryOptions
-import com.example.littlelemon.presentation.common.LittleLemonNavDrawer
 import com.example.littlelemon.presentation.common.MyTopAppBar
 import com.example.littlelemon.presentation.home.Dish
 import com.example.littlelemon.presentation.home.navigateToHome
 import com.example.littlelemon.presentation.order.navigateToOrder
 import com.example.littlelemon.presentation.profile.navigateToProfile
-import com.example.littlelemon.presentation.reservation.navigateToReservation
 import com.example.littlelemon.presentation.util.viewModelFactory
 import com.example.littlelemon.ui.theme.AppTheme
 import com.example.littlelemon.ui.theme.LittleLemonTheme
-import kotlinx.coroutines.launch
 
+private const val TAG = "MenuDescriptionScreen"
 private const val dishTitleArg = "dishTitle"
 private const val MenuDescriptionRoute = "menuDescription"
+
 
 internal class MenuDescriptionArg(val dishId: String) {
     constructor(savedStateHandle: SavedStateHandle) : this(checkNotNull(savedStateHandle[dishTitleArg]) as String)
 }
-
 
 fun NavGraphBuilder.menuDescriptionScreen(
     navController: NavHostController,
@@ -80,10 +83,16 @@ fun NavGraphBuilder.menuDescriptionScreen(
             navigateToHome = navController::navigateToHome,
             navigateToProfile = navController::navigateToProfile,
             navigateToOrder = navController::navigateToOrder,
-            viewModel.dish.collectAsState().value,
-            viewModel.topings.collectAsState(listOf()).value,
-            viewModel::onTopingSelected,
-            onClickMenu = onClickMenu
+            dish = viewModel.dish.collectAsState().value,
+            isBasketEmpty = viewModel.isUserOrderEmpty.collectAsState().value,
+            topings = viewModel.topings.collectAsState(listOf()).value,
+            onTopingSelected = viewModel::onTopingSelected,
+            onDishInc = viewModel::onDishCntInc,
+            onDishDec = viewModel::onDishCntDec,
+            onClickMenu = onClickMenu,
+            onAddOrder = viewModel::onOrder,
+            dismissSnackBar = viewModel::onOrderDoneAck,
+            isAddingOrder = viewModel.isAddingOrder.collectAsState().value
         )
     }
 
@@ -103,18 +112,54 @@ fun MenuDescriptionScreen(
     dish: Dish,
     topings: List<Toping>,
     onTopingSelected: (Toping) -> Unit,
-    isBasketEmpty: Boolean = false,
-    onClickMenu: () -> Unit = {  }
+    isBasketEmpty: Boolean = true,
+    onClickMenu: () -> Unit = {  },
+    onDishInc: () -> Unit = { },
+    onDishDec: () -> Unit = { },
+    onAddOrder: () -> Unit = {  },
+    dismissSnackBar: () -> Unit = { },
+    isAddingOrder: Boolean = false,
 ) {
     val context = LocalContext.current
+    val snackBarHostState = remember {
+        SnackbarHostState()
+    }
+    LaunchedEffect(key1 = isAddingOrder) {
+        if (isAddingOrder) {
+            val result = snackBarHostState
+                .showSnackbar(
+                    message = "Ordering",
+                    actionLabel = "Done",
+                    duration = SnackbarDuration.Indefinite
+                )
+            when (result) {
+                SnackbarResult.Dismissed -> {
+                    dismissSnackBar()
+                }
+                SnackbarResult.ActionPerformed -> {
+                    dismissSnackBar()
+                }
+            }
+        }
+    }
     Scaffold(
+        snackbarHost = {
+                       SnackbarHost(hostState = snackBarHostState)
+        },
         topBar = {
             MyTopAppBar(
                 navigateToHome = navigateToHome,
                 onclickProfile = navigateToProfile,
                 onclickMenu = onClickMenu
             )
-        }
+        },
+        floatingActionButtonPosition = FabPosition.End,
+        floatingActionButton = {
+            BasketFab(
+                isBasketEmpty = isBasketEmpty,
+                goToOrder = navigateToOrder
+            )
+        },
 
     ) { paddingValues ->
         Surface(
@@ -160,11 +205,12 @@ fun MenuDescriptionScreen(
                         Ordering(
                             topings = topings,
                             onTopingSelected = onTopingSelected,
-                            numOfDishes = dish.dishCnt.toString(),
-                            dishPrice = dish.price,
-                            onIncNumOfDish = { dish.incrementDishCnt() },
-                            onDecNumOfDish = { dish.decrementDishCount() },
-                            onAddToBasket = { /*TODO*/ },
+                            numOfDishes = dish.qty.toString(),
+                            dishPrice = dish.price.toString(),
+                            onIncNumOfDish = onDishInc,
+                            onDecNumOfDish = onDishDec,
+                            onAddToBasket = onAddOrder,
+                            enableAddToBasketButton = true,
                             modifier = Modifier.padding(top = AppTheme.dimens.xxSmall, bottom = AppTheme.dimens.large)
                         )
 
@@ -189,10 +235,13 @@ fun MenuDescriptionScreenPreview() = LittleLemonTheme(
         dish = Dish(
             name = "Bruschetta",
             description = "Our Bruschetta is made from grilled bread that has been smeared with garlic and seasoned with salt and olive oil. Topped with chopped tomatoes, oregano and fresh bazil.",
-            price = "10.99",
+            price = 10.99,
             imageUrl = "",
-            category = "Starter"
+            category = "Starter",
+            qty = 0
         ),
+        onDishDec = { },
+        onDishInc = { },
         topings = listOf(
             Dressing(),
             Pamersan(),
