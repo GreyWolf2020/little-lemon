@@ -3,7 +3,6 @@ package com.example.littlelemon.presentation.common
 import android.annotation.SuppressLint
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.border
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,7 +27,8 @@ fun LilyLemonFilledButton(
     onClick: () -> Unit,
     buttonText: String,
     modifier: Modifier = Modifier,
-    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() }
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    enableButton: Boolean = true,
 ) {
     val isPressed by interactionSource.collectIsPressedAsState()
     val containerColor by animateColorAsState(targetValue = if (isPressed)
@@ -48,7 +48,8 @@ fun LilyLemonFilledButton(
         modifier = modifier
             .height(37.dp)
             .fillMaxWidth(),
-    ) {
+        enabled = enableButton,
+        ) {
         Text(
             text = buttonText,
             color = textColor,
@@ -99,7 +100,8 @@ fun LilyLemonFilledButtonPreview() = LittleLemonTheme(
 ) {
     LilyLemonFilledButton(
         {},
-        "Add for $12.99"
+        "Add for $12.99",
+
     )
 }
 

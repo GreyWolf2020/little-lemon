@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -38,11 +39,11 @@ fun NavGraphBuilder.orderScreen(
     composable(
         OrderRoute
     ) { backStackEntry ->
-        val viewModel = viewModel<OrderViewModel>(
-            factory = viewModelFactory {
-                OrderViewModel()
-            }
-        )
+//        val viewModel = viewModel<OrderViewModel>(
+//            factory = viewModelFactory {
+//                OrderViewModel()
+//            }
+//        )
         OrderScreen(
             navigateToHome = navController::navigateToHome,
             navigateToProfile = navController::navigateToProfile,
@@ -52,8 +53,8 @@ fun NavGraphBuilder.orderScreen(
 }
 
 fun NavController.navigateToOrder() {
-    this.
-    navigate("$OrderRoute")
+    if (this.currentBackStackEntry?.destination?.route != OrderRoute)
+        this.navigate("$OrderRoute")
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -91,7 +92,7 @@ internal fun OrderScreen(
                     DeliveryOptions(
                         modifier = Modifier.padding(horizontal = Dimensions.large)
                     )
-                    Divider()
+                    HorizontalDivider()
                 }
                 CutleryOffer(
                     modifier = Modifier.weight(0.08f),

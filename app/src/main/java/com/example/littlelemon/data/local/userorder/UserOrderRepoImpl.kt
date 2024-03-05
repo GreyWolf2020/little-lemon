@@ -17,6 +17,7 @@ class UserOrderRepoImpl(
     val context: Context
 ) : UserOrderRepository {
     override suspend fun saveUserOrder(order: UserOrderItem) {
+        Log.v(TAG, "Order being added is $order")
         context
             .userOrderDataStore
             .updateData { orders ->
@@ -49,12 +50,12 @@ class UserOrderRepoImpl(
             .data
             .catch { exception ->
                 if (exception is IOException) {
-                    Log.d(TAG, "Error reading UserOrder message from datastore", exception)
                     emit(defaultMessage)
                 }
             }.map {
-                it != defaultMessage
+                it == defaultMessage
             }
+
     }
 
     override suspend fun deleteAllUserOrders() {

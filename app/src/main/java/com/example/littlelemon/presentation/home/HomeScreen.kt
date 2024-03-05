@@ -60,6 +60,7 @@ fun NavGraphBuilder.homeScreen(
             onCategoryClicked = viewModel::onCategoryClicked,
             onClickSearch = viewModel::onSearch,
             dishes = viewModel.dishes.collectAsState().value,
+            isBasketEmpty = viewModel.isUserOrderEmpty.collectAsState().value,
             onClickMenu = onClickMenu
         )
 
@@ -158,9 +159,10 @@ fun HomeScreenPreview() = LittleLemonTheme(
             Dish(
                 name = "Name",
                 description = "Something that is awesome or not, it just has to go to a lenght of more that six lines, Takakae, Hwaiting, Fighting, Bororo kusvika zvese zvaparara.",
-                price = "11.00",
+                price = 11.00,
                 imageUrl = "",
-                category = ""
+                category = "",
+                qty = 0
             )
         },
         onCategoryClicked = { },

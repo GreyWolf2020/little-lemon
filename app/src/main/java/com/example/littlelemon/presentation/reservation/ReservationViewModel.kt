@@ -6,6 +6,7 @@ import com.example.littlelemon.data.local.userorder.UserOrderRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -49,7 +50,7 @@ internal class ReservationViewModel(
     private val _time = MutableStateFlow<Time?>(null)
     internal val time = _time.asStateFlow()
 
-    private val _isUserOrderEmpty = MutableStateFlow<Boolean>(false)
+    private val _isUserOrderEmpty = MutableStateFlow<Boolean>(true)
     internal val isUserOrderEmpty = _isUserOrderEmpty.asStateFlow()
 
     private val _customerReserveInfo = MutableStateFlow<CustomerReservation>(
@@ -79,8 +80,12 @@ internal class ReservationViewModel(
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            userOrderRepository.isOrderEmpty().collect {
-                _isUserOrderEmpty.update { it }
+            val isOrderEmptyFlow = userOrderRepository.isOrderEmpty()
+            isOrderEmptyFlow.collect { isOrderEmpty ->
+                _isUserOrderEmpty.update { isOrderEmpty }
+            }
+            _isUserOrderEmpty.update {
+                isOrderEmptyFlow.first()
             }
         }
 

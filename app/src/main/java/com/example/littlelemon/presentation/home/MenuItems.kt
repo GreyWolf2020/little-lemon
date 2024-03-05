@@ -92,23 +92,26 @@ fun MenuItemsPreview() = LittleLemonTheme(
             Dish(
                 name = "Hero",
                 description = "Dummy Image for using the hero Image. I am going to continues typing because these words are supposed to span at least three lines.",
-                price = "100.01",
+                price = 100.01,
                 imageUrl = "",
-                category = "Mains"
+                category = "Mains",
+                qty = 0
             ),
             Dish(
                 name = "Hero",
                 description = "Dummy Image for using the hero Image. I am going to continues typing because these words are supposed to span at least three lines.",
-                price = "100.01",
+                price = 100.01,
                 imageUrl = "",
-                category = "Mains"
+                category = "Mains",
+                qty = 0
             ),
             Dish(
                 name = "Hero",
                 description = "Dummy Image for using the hero Image. I am going to continues typing because these words are supposed to span at least three lines.",
-                price = "100.01",
+                price = 100.01,
                 imageUrl = "",
-                category = "Mains"
+                category = "Mains",
+                qty = 0
             )
         ), {}
     )
