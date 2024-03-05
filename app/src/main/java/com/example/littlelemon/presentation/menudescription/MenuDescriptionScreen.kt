@@ -128,7 +128,7 @@ fun MenuDescriptionScreen(
         if (isAddingOrder) {
             val result = snackBarHostState
                 .showSnackbar(
-                    message = "Ordering",
+                    message = "Add to Order",
                     actionLabel = "Done",
                     duration = SnackbarDuration.Indefinite
                 )
@@ -144,7 +144,7 @@ fun MenuDescriptionScreen(
     }
     Scaffold(
         snackbarHost = {
-                       SnackbarHost(hostState = snackBarHostState)
+            SnackbarHost(hostState = snackBarHostState)
         },
         topBar = {
             MyTopAppBar(
