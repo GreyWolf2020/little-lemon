@@ -33,6 +33,7 @@ fun Ordering(
     onIncNumOfDish: () -> Unit,
     onDecNumOfDish: () -> Unit,
     onAddToBasket: () -> Unit,
+    totalCost: Double = 0.00,
     enableAddToBasketButton: Boolean = false,
     modifier: Modifier = Modifier
 ) {
@@ -54,7 +55,7 @@ fun Ordering(
         )
         AddToCartButton(
             onClickAddToCart = onAddToBasket,
-            price = dishPrice,
+            price = totalCost.toString(),
             enable = enableAddToBasketButton
         )
 

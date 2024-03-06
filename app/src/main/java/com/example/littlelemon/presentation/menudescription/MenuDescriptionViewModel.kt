@@ -1,6 +1,7 @@
 package com.example.littlelemon.presentation.menudescription
 
 import android.util.Log
+import androidx.compose.ui.util.fastSumBy
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.littlelemon.data.local.menu.MenuRepository
@@ -42,7 +43,6 @@ internal class MenuDescriptionViewModel(
     )
     val dish = _dish
         .asStateFlow()
-        .also { it.onCompletion { Log.d(TAG, it.toString()) } }
 
     private val feta = MutableStateFlow<Feta>(Feta())
     private val dressing = MutableStateFlow<Dressing>(Dressing())
@@ -52,6 +52,12 @@ internal class MenuDescriptionViewModel(
     }
     private val _isUserOrderEmpty = MutableStateFlow(true)
     internal val isUserOrderEmpty = _isUserOrderEmpty.asStateFlow()
+
+    internal val totalCost = combine(_dish, topings) { dish, topings ->
+        if (dish.qty > 0)
+            dish.qty * (dish.price + topings.sumOf { it.toBePaid() })
+        else 0.00
+    }
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
@@ -77,9 +83,11 @@ internal class MenuDescriptionViewModel(
     }
 
     internal fun onOrder() {
+        if (_dish.value.qty < 0)
+            return
         _isAddingOrder.update { true }
         viewModelScope.launch(Dispatchers.IO) {
-            val toppingsCost = feta.value.toBePaid() + pamersan.value.toBePaid() + feta.value.toBePaid()
+            val toppingsCost = topings.first().sumOf { it.toBePaid() }
             userOrderRepository
                 .saveUserOrder(
                     _dish.
