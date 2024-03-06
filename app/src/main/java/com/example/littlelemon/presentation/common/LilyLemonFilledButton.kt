@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.littlelemon.ui.theme.LittleLemonTheme
+import com.example.littlelemon.ui.theme.tonalButtonSelected
 
 
 @Composable
@@ -35,15 +36,20 @@ fun LilyLemonFilledButton(
         MaterialTheme.colorScheme.primary
     else
         MaterialTheme.colorScheme.tertiary)
-    val textColor by animateColorAsState(targetValue = if (isPressed)
-        Color.White
-    else
-        MaterialTheme.colorScheme.primary)
+    val textColor by animateColorAsState(targetValue = when {
+        isPressed && enableButton -> Color.White
+        !isPressed && enableButton -> MaterialTheme.colorScheme.primary
+        else -> Color.White.copy(alpha = 0.75f)
+    }
+    )
+
     Button(
         onClick = onClick,
         interactionSource = interactionSource,
         colors = ButtonDefaults.buttonColors(
-            containerColor = containerColor
+            containerColor = containerColor,
+            disabledContainerColor = tonalButtonSelected,
+            disabledContentColor = Color.White
         ),
         modifier = modifier
             .height(37.dp)
@@ -64,7 +70,8 @@ fun LilyLemonUnFilledButton(
     onClick: () -> Unit,
     buttonText: String,
     modifier: Modifier = Modifier,
-    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() }
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    enabled: Boolean = true
 ) {
     val isPressed by interactionSource.collectIsPressedAsState()
     val containerColor by animateColorAsState(targetValue = if (isPressed)
@@ -75,6 +82,7 @@ fun LilyLemonUnFilledButton(
     val textColor = MaterialTheme.colorScheme.primary
     Button(
         onClick = onClick,
+        enabled = enabled,
         interactionSource = interactionSource,
         colors = ButtonDefaults.buttonColors(
             containerColor = containerColor,
@@ -100,7 +108,7 @@ fun LilyLemonFilledButtonPreview() = LittleLemonTheme(
 ) {
     LilyLemonFilledButton(
         {},
-        "Add for $12.99",
+        "Add for $12.99"
 
     )
 }
@@ -114,6 +122,19 @@ fun LilyLemonUnFilledButtonPreview() = LittleLemonTheme(
 ) {
     LilyLemonUnFilledButton(
         {},
-        "Add for $12.99",
+        "Add for $12.99"
     )
+}
+
+@Preview
+@Composable
+fun LilyLemonFilledDisabledButtonPreview() = LittleLemonTheme(
+    darkTheme = false,
+    dynamicColor = false
+) {
+    LilyLemonFilledButton(
+        {},
+        "Add for $0.00",
+        enableButton = false
+        )
 }

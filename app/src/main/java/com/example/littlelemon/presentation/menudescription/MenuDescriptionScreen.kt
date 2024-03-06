@@ -92,7 +92,8 @@ fun NavGraphBuilder.menuDescriptionScreen(
             onClickMenu = onClickMenu,
             onAddOrder = viewModel::onOrder,
             dismissSnackBar = viewModel::onOrderDoneAck,
-            isAddingOrder = viewModel.isAddingOrder.collectAsState().value
+            isAddingOrder = viewModel.isAddingOrder.collectAsState().value,
+            totalCost = viewModel.totalCost.collectAsState(0.00).value
         )
     }
 
@@ -119,6 +120,7 @@ fun MenuDescriptionScreen(
     onAddOrder: () -> Unit = {  },
     dismissSnackBar: () -> Unit = { },
     isAddingOrder: Boolean = false,
+    totalCost: Double = 0.00
 ) {
     val context = LocalContext.current
     val snackBarHostState = remember {
@@ -210,7 +212,8 @@ fun MenuDescriptionScreen(
                             onIncNumOfDish = onDishInc,
                             onDecNumOfDish = onDishDec,
                             onAddToBasket = onAddOrder,
-                            enableAddToBasketButton = true,
+                            enableAddToBasketButton = dish.qty > 0,
+                            totalCost = totalCost,
                             modifier = Modifier.padding(top = AppTheme.dimens.xxSmall, bottom = AppTheme.dimens.large)
                         )
 
