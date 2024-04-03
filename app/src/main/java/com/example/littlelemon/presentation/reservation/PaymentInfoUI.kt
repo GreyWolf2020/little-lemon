@@ -64,7 +64,7 @@ internal fun PaymentInfoUI(
                 .padding(top = Dimensions.xxSmall)
         ) {
             LilyLemonTextInput(
-                modifier = Modifier.weight(0.20f),
+                modifier = Modifier.weight(0.25f),
                 text = cvv,
                 onTextChange = onCvvChange,
                 placeholder = stringResource(R.string.cvv)
@@ -72,7 +72,7 @@ internal fun PaymentInfoUI(
             Spacer(modifier =  Modifier.weight(0.05f),)
             DatePickerInput(
                 modifier = Modifier
-                    .weight(0.65f),
+                    .weight(0.60f),
                 placeholder = stringResource(R.string.exp_date),
                 dateFormat = "MM-yy",
                 chosenDate = expDate,
