@@ -1,4 +1,4 @@
-![Little Lemon App Logo](UI Design/Little Lemon.png)
+<img src="UI Design/Little Lemon.png"/>
 
 Little Lemon application is a food ordering and reservation app, built using the MVVM architecture with
 [Jetpack Compose](https://developer.android.com/jetpack/compose).
